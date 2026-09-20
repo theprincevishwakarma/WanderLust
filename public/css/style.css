@@ -1,6 +1,6 @@
-/* body {
-  background-color: pink;
-} */
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
 
 /* Navbar */
 
@@ -9,9 +9,12 @@
   background-color: white;
 }
 
-.fa-compass {
-  color: #fe424d;
-  font-size: 2rem;
+.navbar-logo {
+  padding-left: 1rem;
+}
+
+.navbar-logo-img {
+  width: 2rem;
 }
 
 .nav-link {
@@ -66,4 +69,36 @@ footer {
 
 .f-logo-mylogo {
   width: 4rem;
+}
+
+/* Cards */
+
+.card {
+  border: none;
+  margin-bottom: 2rem;
+}
+
+.card-img-top {
+  border-radius: 1rem;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.listing-link {
+  text-decoration: none;
+}
+
+/* Card Effect */
+
+.card-img-overlay {
+  opacity: 0;
+}
+
+.card-img-overlay:hover {
+  opacity: 0.2;
+  background-color: white;
 }
