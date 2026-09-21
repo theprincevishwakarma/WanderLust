@@ -1,5 +1,12 @@
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
 }
 
 /* Navbar */
@@ -101,4 +108,12 @@ footer {
 .card-img-overlay:hover {
   opacity: 0.2;
   background-color: white;
+}
+
+/* New page */
+
+.add-btn {
+  background-color: #ff385c;
+  border: none;
+  width: 7rem;
 }
