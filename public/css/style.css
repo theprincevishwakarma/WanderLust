@@ -30,7 +30,7 @@ body {
 
 /* Footer */
 footer {
-  background-color: #ebebeb;
+  background-color: #f7f7f7;
 }
 
 .f-info-links a {
@@ -113,7 +113,19 @@ footer {
 /* New page */
 
 .add-btn {
-  background-color: #ff385c;
+  background-color: #ef2755;
   border: none;
-  width: 7rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0;
+  width: 8rem;
+}
+
+/* Edit page */
+
+.Edit-btn {
+  background-color: #ef2755;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0;
+  width: 8rem;
 }
