@@ -10,10 +10,10 @@ const listingSchema = new Schema({
   image: {
     type: String,
     default:
-      "https://www.vecteezy.com/photo/12168187-beautiful-sunset-on-the-beach-with-palm-tree-for-travel-and-vacation",
+      "'https://res.cloudinary.com/frtasp0i/image/upload/v1789908620/listing_default_img.jpg",
     set: (v) =>
       v === ""
-        ? "https://www.vecteezy.com/photo/12168187-beautiful-sunset-on-the-beach-with-palm-tree-for-travel-and-vacation"
+        ? "'https://res.cloudinary.com/frtasp0i/image/upload/v1789908620/listing_default_img.jpg"
         : v,
   },
   price: Number,

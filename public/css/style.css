@@ -25,7 +25,13 @@ body {
 }
 
 .nav-link {
+  color: e9e9e9;
+  transition: scale 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.nav-link:hover {
   color: #222222;
+  scale: 1.01;
 }
 
 /* Footer */
@@ -122,10 +128,32 @@ footer {
 
 /* Edit page */
 
-.Edit-btn {
+.edit-btn {
   background-color: #ef2755;
   border: none;
   border-radius: 0.5rem;
   padding: 0.5rem 0;
   width: 8rem;
+}
+
+/* Show Page */
+
+.show-img {
+  height: 30vh;
+}
+
+.btns {
+  display: flex;
+}
+
+.show-card {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.delete-btn {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0;
+  width: 5rem;
 }
