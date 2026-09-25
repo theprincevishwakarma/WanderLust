@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync");
+const ExpressError = require("./utils/ExpressError");
 
 const Listing = require("./models/listing");
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
@@ -32,10 +34,13 @@ app.get("/", (req, res) => {
 });
 
 // Index Route
-app.get("/listings", async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("./listings/index", { allListings });
-});
+app.get(
+  "/listings",
+  wrapAsync(async (req, res, next) => {
+    const allListings = await Listing.find({});
+    res.render("./listings/index", { allListings });
+  }),
+);
 
 // New Route
 app.get("/listings/new", (req, res) => {
@@ -43,41 +48,73 @@ app.get("/listings/new", (req, res) => {
 });
 
 // Show Route
-app.get("/listings/:id", async (req, res) => {
-  let { id } = req.params;
-  const listing = await Listing.findById(id);
-  res.render("./listings/show", { listing });
-});
+app.get(
+  "/listings/:id",
+  wrapAsync(async (req, res, next) => {
+    let { id } = req.params;
+    const listing = await Listing.findById(id);
+    res.render("./listings/show", { listing });
+  }),
+);
 
 // Create Route
-app.post("/listings", async (req, res) => {
-  // let { title, description, image, price, location, country } = req.body;
-  // let listing = req.body;
+app.post(
+  "/listings",
+  wrapAsync(async (req, res, next) => {
+    // let { title, description, image, price, location, country } = req.body;
+    // let listing = req.body;
 
-  const newListing = new Listing(req.body.listing);
-  await newListing.save();
-  res.redirect("/listings");
-});
+    if (!req.body.listing) {
+      throw new ExpressError(400, "Send valid data for StayNest");
+    }
+    const newListing = new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
+  }),
+);
 
 // Edit Route
-app.get("/listings/:id/edit", async (req, res) => {
-  let { id } = req.params;
-  let listing = await Listing.findById(id);
-  res.render("./listings/edit", { listing });
-});
+app.get(
+  "/listings/:id/edit",
+  wrapAsync(async (req, res, next) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id);
+    res.render("./listings/edit", { listing });
+  }),
+);
 
 // Update Route
-app.put("/listings/:id", async (req, res) => {
-  let { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-  res.redirect(`/listings/${id}`);
-});
+app.put(
+  "/listings/:id",
+  wrapAsync(async (req, res, next) => {
+    if (!req.body.listing) {
+      throw new ExpressError(400, "Send valid data for StayNest");
+    }
+    let { id } = req.params;
+    await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    res.redirect(`/listings/${id}`);
+  }),
+);
 
 // Delete Route
-app.delete("/listings/:id", async (req, res) => {
-  let { id } = req.params;
-  await Listing.findByIdAndDelete(id);
-  res.redirect("/listings");
+app.delete(
+  "/listings/:id",
+  wrapAsync(async (req, res, next) => {
+    let { id } = req.params;
+    await Listing.findByIdAndDelete(id);
+    res.redirect("/listings");
+  }),
+);
+
+// Page Not Found
+app.all("/*splat", (req, res, next) => {
+  next(new ExpressError(404, "Page Not Found!"));
+});
+
+// Error Handler middleware
+app.use((err, req, res, next) => {
+  let { statusCode = 500, message = "Some Error Occurred!" } = err;
+  res.status(statusCode).render("Error", { message });
 });
 
 app.listen("8080", () => {
