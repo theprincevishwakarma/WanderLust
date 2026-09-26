@@ -10,10 +10,10 @@ const listingSchema = new Schema({
   image: {
     type: String,
     default:
-      "'https://res.cloudinary.com/frtasp0i/image/upload/v1789908620/listing_default_img.jpg",
+      "https://res.cloudinary.com/frtasp0i/image/upload/v1789908620/listing_default_img.jpg",
     set: (v) =>
       v === ""
-        ? "'https://res.cloudinary.com/frtasp0i/image/upload/v1789908620/listing_default_img.jpg"
+        ? "https://res.cloudinary.com/frtasp0i/image/upload/v1789908620/listing_default_img.jpg"
         : v,
   },
   price: Number,
