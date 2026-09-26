@@ -9,6 +9,7 @@ const ExpressError = require("./utils/ExpressError");
 const { listingSchema } = require("./schema");
 
 const Listing = require("./models/listing");
+const Review = require("./models/review");
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 main()
@@ -74,9 +75,6 @@ app.post(
   "/listings",
   validateListing,
   wrapAsync(async (req, res, next) => {
-    // let { title, description, image, price, location, country } = req.body;
-    // let listing = req.body;
-
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
@@ -113,6 +111,20 @@ app.delete(
     res.redirect("/listings");
   }),
 );
+
+// Reviews
+// Post Route
+app.post("/listings/:id/reviews", async (req, res, next) => {
+  let listing = await Listing.findById(req.params.id);
+  let newReview = new Review(req.body.review);
+
+  listing.reviews.push(newReview);
+
+  await newReview.save();
+  await listing.save();
+
+  res.redirect(`/listings/${req.params.id}`);
+});
 
 // Page Not Found
 app.all("/*splat", (req, res, next) => {
