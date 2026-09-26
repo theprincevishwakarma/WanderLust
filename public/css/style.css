@@ -26,27 +26,40 @@ body {
 
 .nav-link {
   color: e9e9e9;
-  transition: scale 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: scale color 0.5s ease-in-out;
 }
 
 .nav-link:hover {
   color: #222222;
-  scale: 1.01;
+  scale: 1.03;
 }
 
 /* Footer */
 footer {
   background-color: #f7f7f7;
+  color: #222222be;
+}
+
+.f-info-socials a {
+  text-decoration: none;
+  color: #222222be;
+  transition: scale color 0.5s ease-in-out;
+}
+
+.f-info-socials a:hover {
+  color: #222222;
+  scale: 1.1;
 }
 
 .f-info-links a {
   text-decoration: none;
-  color: #222222;
+  color: #222222be;
   margin: 0 0.75rem;
 }
 
 .f-info-links a:hover {
   text-decoration: underline;
+  color: #222222;
 }
 
 .f-info-links,
