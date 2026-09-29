@@ -47,6 +47,7 @@ router.post(
   wrapAsync(async (req, res) => {
     const newListing = new Listing(req.body.listing);
     await newListing.save();
+    req.flash("success", "New StayNest Created!");
     res.redirect("/listings");
   }),
 );
