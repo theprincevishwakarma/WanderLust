@@ -69,6 +69,7 @@ router.put(
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    req.flash("success", "StayNest Updated!");
     res.redirect(`/listings/${id}`);
   }),
 );
@@ -79,6 +80,7 @@ router.delete(
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
+    req.flash("success", "StayNest Deleted!");
     res.redirect("/listings");
   }),
 );
