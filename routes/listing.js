@@ -36,7 +36,12 @@ router.get(
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id).populate("reviews");
-    res.render("./listings/show", { listing });
+    if (!listing) {
+      req.flash("error", "StayNest you requested for doesn't exist!");
+      res.redirect("/listings");
+    } else {
+      res.render("./listings/show", { listing });
+    }
   }),
 );
 
@@ -58,7 +63,12 @@ router.get(
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
-    res.render("./listings/edit", { listing });
+    if (!listing) {
+      req.flash("error", "StayNest you requested for doesn't exist!");
+      res.redirect("/listings");
+    } else {
+      res.render("./listings/edit", { listing });
+    }
   }),
 );
 
