@@ -13,6 +13,7 @@ const User = require("./models/user");
 
 const listingRouter = require("./routes/listing");
 const reviewRouter = require("./routes/review");
+const userRouter = require("./routes/user");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -63,6 +64,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/", userRouter);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 
