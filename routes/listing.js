@@ -5,6 +5,8 @@ const ExpressError = require("../utils/ExpressError");
 const Listing = require("../models/listing");
 const { listingSchema } = require("../schema");
 
+const { isLoggedIn } = require("../middleware");
+
 // Validate Listing Middleware
 const validateListing = (req, res, next) => {
   let { error } = listingSchema.validate(req.body);
@@ -26,9 +28,13 @@ router.get(
 );
 
 // New Route
-router.get("/new", (req, res) => {
-  res.render("./listings/new");
-});
+router.get(
+  "/new",
+  isLoggedIn("You must be logged in to create StayNest!"),
+  (req, res) => {
+    res.render("./listings/new");
+  },
+);
 
 // Show Route
 router.get(
@@ -48,6 +54,7 @@ router.get(
 // Create Route
 router.post(
   "/",
+  isLoggedIn("You must be logged in to create StayNest!"),
   validateListing,
   wrapAsync(async (req, res) => {
     const newListing = new Listing(req.body.listing);
@@ -60,6 +67,7 @@ router.post(
 // Edit Route
 router.get(
   "/:id/edit",
+  isLoggedIn("You must be logged in to edit StayNest!"),
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
@@ -75,6 +83,7 @@ router.get(
 // Update Route
 router.put(
   "/:id",
+  isLoggedIn("You must be logged in to edit StayNest!"),
   validateListing,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
@@ -87,6 +96,7 @@ router.put(
 // Delete Route
 router.delete(
   "/:id",
+  isLoggedIn("You must be logged in to delete StayNest!"),
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
