@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require("../models/user");
 const wrapAasync = require("../utils/wrapAsync");
 const passport = require("passport");
-const { isLoggedIn } = require("../middleware");
+const { isLoggedIn, saveRedirectUrl } = require("../middleware");
 
 // SignUp page
 router.get("/signup", (req, res) => {
@@ -37,13 +37,15 @@ router.get("/login", (req, res) => {
 
 router.post(
   "/login",
+  saveRedirectUrl,
   passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true,
   }),
   async (req, res) => {
     req.flash("success", "Welcome back to StayNest!");
-    res.redirect("/listings");
+    let redirectUrl = res.locals.redirectUrl || "/listings";
+    res.redirect(redirectUrl);
   },
 );
 
