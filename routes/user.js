@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const wrapAasync = require("../utils/wrapAsync");
+const passport = require("passport");
 
 // SignUp page
 router.get("/signup", (req, res) => {
@@ -22,6 +23,22 @@ router.post(
       res.redirect("/signup");
     }
   }),
+);
+
+router.get("/login", (req, res) => {
+  res.render("./users/login");
+});
+
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    failureRedirect: "/login",
+    failureFlash: true,
+  }),
+  async (req, res) => {
+    req.flash("success", "Welcome back to StayNest!");
+    res.redirect("/listings");
+  },
 );
 
 module.exports = router;
