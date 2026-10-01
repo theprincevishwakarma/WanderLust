@@ -173,3 +173,19 @@ footer {
   padding: 0.5rem 0;
   width: 5rem;
 }
+
+/* Logout */
+.logout-btn {
+  background-color: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 550;
+  color: #222222b0;
+  transition: scale color 0.5s ease-in-out;
+}
+
+.logout-btn:hover {
+  background-color: white;
+  color: #222222;
+}
