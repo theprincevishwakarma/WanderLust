@@ -1,4 +1,5 @@
 const Listing = require("./models/listing");
+const Review = require("./models/review");
 const ExpressError = require("./utils/ExpressError");
 const { listingSchema, reviewSchema } = require("./schema");
 
@@ -54,4 +55,29 @@ module.exports.validateReview = (req, res, next) => {
   } else {
     next();
   }
+};
+
+// check Author of the Review to delete review
+module.exports.isReviewAuthor = async (req, res, next) => {
+  let { id, reviewId } = req.params;
+  let review = await Review.findById(reviewId);
+  if (!review.author.equals(res.locals.currUser._id)) {
+    req.flash("error", "You are not the author of this review!");
+    return res.redirect(`/listings/${id}`);
+  }
+  next();
+};
+
+// StayNest owner does'nt have permission to create review on there own StayNest
+module.exports.isListingOwner = async (req, res, next) => {
+  let { id } = req.params;
+  let listing = await Listing.findById(id);
+  if (listing.owner.equals(req.user._id)) {
+    req.flash(
+      "error",
+      "Owner have no permission to create review on there own StayNest",
+    );
+    return res.redirect(`/listings/${id}`);
+  }
+  next();
 };

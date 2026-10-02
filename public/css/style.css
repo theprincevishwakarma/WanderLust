@@ -132,6 +132,19 @@ footer {
   background-color: white;
 }
 
+.review-del-btn {
+  background-color: white;
+  border: none;
+  border-radius: 0.5rem;
+  color: rgba(0, 0, 0, 0.708);
+  transition: scale color 0.5s ease-in-out;
+}
+
+.review-del-btn:hover {
+  background-color: white;
+  color: #ef2755;
+}
+
 /* New page */
 
 .add-btn {
