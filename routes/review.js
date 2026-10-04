@@ -15,7 +15,7 @@ const {
 // Post Review Route
 router.post(
   "/",
-  isLoggedIn("You ain't logged in!"),
+  isLoggedIn,
   isListingOwner,
   validateReview,
   wrapAsync(async (req, res, next) => {
@@ -35,7 +35,7 @@ router.post(
 //Delete Review Route
 router.delete(
   "/:reviewId",
-  isLoggedIn("You ain't logged in!"),
+  isLoggedIn,
   isReviewAuthor,
   wrapAsync(async (req, res) => {
     let { id, reviewId } = req.params;

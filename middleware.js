@@ -4,16 +4,13 @@ const ExpressError = require("./utils/ExpressError");
 const { listingSchema, reviewSchema } = require("./schema");
 
 // check user is Logged in
-module.exports.isLoggedIn = (message) => {
-  return (req, res, next) => {
-    if (!req.isAuthenticated()) {
-      req.session.redirectUrl = req.originalUrl;
-      req.flash("error", message);
-      return res.redirect("/login");
-    }
-
-    next();
-  };
+module.exports.isLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    req.session.redirectUrl = req.originalUrl;
+    req.flash("error", "You must be logged in to continue!");
+    return res.redirect("/login");
+  }
+  next();
 };
 
 // save the url for redirect after login

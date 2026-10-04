@@ -49,7 +49,7 @@ router.post(
   },
 );
 
-router.post("/logout", isLoggedIn("Firstly Logged In!"), (req, res, next) => {
+router.post("/logout", isLoggedIn, (req, res, next) => {
   req.logout((err) => {
     if (err) {
       return next(err);
