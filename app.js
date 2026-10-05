@@ -74,7 +74,7 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 
 // Page Not Found
-app.all("/*splat", (req, res, next) => {
+app.all("*splat", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));
 });
 
