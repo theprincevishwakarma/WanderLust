@@ -1,3 +1,4 @@
+const { cloudinary } = require("../cloudConfig");
 const Listing = require("../models/listing");
 
 module.exports.index = async (req, res) => {
@@ -44,14 +45,22 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
-  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  if (typeof req.file != "undefined") {
+    let { filename: oldFilename } = listing.image;
+    let { url, filename } = req.file;
+    listing.image = { url, filename };
+    await listing.save();
+    await cloudinary.uploader.destroy(oldFilename);
+  }
   req.flash("success", "StayNest Updated!");
   res.redirect(`/listings/${id}`);
 };
 
 module.exports.destroyListing = async (req, res) => {
   let { id } = req.params;
-  await Listing.findByIdAndDelete(id);
+  let listing = await Listing.findByIdAndDelete(id);
+  await cloudinary.uploader.destroy(listing.image.filename);
   req.flash("success", "StayNest Deleted!");
   res.redirect("/listings");
 };
