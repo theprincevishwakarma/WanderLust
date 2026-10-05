@@ -1,79 +1,151 @@
 <% layout("/layouts/boilerplate") -%>
-<div class="row mt-3">
-  <div class="col-8 offset-2">
-    <h3>Edit StayNest</h3>
-    <form
-      action="/listings/<%=listing._id%>?_method=PUT"
-      method="POST"
-      class="needs-validation"
-      enctype="multipart/form-data"
-      novalidate
-    >
-      <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input
-          type="text"
-          name="listing[title]"
-          class="form-control"
-          value="<%= listing.title %>"
-          required
-        />
-        <div class="invalid-feedback">
-          Please enter a title for your StayNest.
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" name="listing[description]" required>
-<%= listing.description %></textarea
-        >
-        <div class="invalid-feedback">
-          Please add a short description of your StayNest.
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="image" class="form-label">Image</label>
-        <input type="file" name="listing[image]" class="form-control" />
-        <div class="invalid-feedback">Please upload a Image.</div>
-      </div>
-      <div class="row">
-        <div class="mb-3 col-md-4">
-          <label for="price" class="form-label">Price</label>
-          <input
-            type="number"
-            name="listing[price]"
-            class="form-control"
-            value="<%= listing.price %>"
-            required
-          />
-          <div class="invalid-feedback">Please enter a valid price.</div>
-        </div>
-        <div class="mb-3 col-md-8">
-          <label for="country" class="form-label">Country</label>
+
+<div class="container">
+  <div class="row justify-content-center py-4">
+    <div class="col-12 col-sm-11 col-md-10 col-lg-8">
+      <h3 class="mb-4">Edit StayNest</h3>
+
+      <form
+        action="/listings/<%= listing._id %>?_method=PUT"
+        method="POST"
+        class="needs-validation"
+        enctype="multipart/form-data"
+        novalidate
+      >
+        <!-- Title -->
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+
           <input
             type="text"
-            name="listing[country]"
+            id="title"
+            name="listing[title]"
             class="form-control"
-            value="<%= listing.country %>"
+            value="<%= listing.title %>"
             required
           />
-          <div class="invalid-feedback">Please enter a valid country name.</div>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input
-          type="text"
-          name="listing[location]"
-          class="form-control"
-          value="<%= listing.location %>"
-          required
-        />
-        <div class="invalid-feedback">Please enter a valid location.</div>
-      </div>
 
-      <button class="btn btn-dark mt-3 edit-btn">Edit</button>
-      <br /><br />
-    </form>
+          <div class="invalid-feedback">
+            Please enter a title for your StayNest.
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-4">
+          <label for="description" class="form-label"> Description </label>
+
+          <textarea
+            id="description"
+            class="form-control"
+            name="listing[description]"
+            rows="4"
+            required
+          >
+<%= listing.description %></textarea
+          >
+
+          <div class="invalid-feedback">
+            Please add a short description of your StayNest.
+          </div>
+        </div>
+
+        <!-- Image + Price + Country -->
+        <div class="row g-4 mb-4">
+          <!-- Current Image -->
+          <div class="col-12 col-md-5">
+            <label class="form-label"> Current Image </label>
+
+            <div class="current-image-wrapper">
+              <img
+                src="<%= originalImageUrl %>"
+                alt="Your StayNest"
+                class="img-fluid rounded-3 current-listing-image"
+              />
+            </div>
+          </div>
+
+          <!-- Right Side -->
+          <div class="col-12 col-md-7">
+            <!-- New Image -->
+            <div class="mb-4 mt-lg-5">
+              <label for="image" class="form-label"> Change Image </label>
+
+              <input
+                type="file"
+                id="image"
+                name="listing[image]"
+                class="form-control"
+                accept="image/*"
+              />
+
+              <div class="form-text">
+                Leave empty if you don't want to change the image.
+              </div>
+
+              <div class="invalid-feedback">Please upload a valid image.</div>
+            </div>
+
+            <!-- Price + Country -->
+            <div class="row g-3 mt-lg-4 price_country">
+              <!-- Price -->
+              <div class="col-12 col-sm-4">
+                <label for="price" class="form-label"> Price </label>
+
+                <input
+                  type="number"
+                  id="price"
+                  name="listing[price]"
+                  class="form-control"
+                  value="<%= listing.price %>"
+                  min="0"
+                  required
+                />
+
+                <div class="invalid-feedback">Please enter a valid price.</div>
+              </div>
+
+              <!-- Country -->
+              <div class="col-12 col-sm-8">
+                <label for="country" class="form-label"> Country </label>
+
+                <input
+                  type="text"
+                  id="country"
+                  name="listing[country]"
+                  class="form-control"
+                  value="<%= listing.country %>"
+                  required
+                />
+
+                <div class="invalid-feedback">
+                  Please enter a valid country name.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-4">
+          <label for="location" class="form-label"> Location </label>
+
+          <input
+            type="text"
+            id="location"
+            name="listing[location]"
+            class="form-control"
+            value="<%= listing.location %>"
+            required
+          />
+
+          <div class="invalid-feedback">Please enter a valid location.</div>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn mt-2 edit-btn btn-red px-4 py-2">
+          Edit
+        </button>
+      </form>
+    </div>
   </div>
 </div>

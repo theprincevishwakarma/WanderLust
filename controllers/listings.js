@@ -37,10 +37,12 @@ module.exports.renderEditForm = async (req, res) => {
   let listing = await Listing.findById(id);
   if (!listing) {
     req.flash("error", "StayNest you requested for doesn't exist!");
-    res.redirect("/listings");
-  } else {
-    res.render("./listings/edit", { listing });
+    return res.redirect("/listings");
   }
+
+  let originalImageUrl = listing.image.url;
+  originalImageUrl = originalImageUrl.replace("/upload", "/upload/q_40");
+  res.render("./listings/edit", { listing, originalImageUrl });
 };
 
 module.exports.updateListing = async (req, res) => {
