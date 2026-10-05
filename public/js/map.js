@@ -6,6 +6,9 @@ const map = new mapboxgl.Map({
   zoom: 9, // starting zoom
 });
 
+map.addControl(new mapboxgl.FullscreenControl());
+map.addControl(new mapboxgl.NavigationControl());
+
 const markerElement = document.createElement("div");
 
 markerElement.className = "staynest-marker";
@@ -21,18 +24,7 @@ const marker = new mapboxgl.Marker({
   .setLngLat(coordinates)
   .setPopup(
     new mapboxgl.Popup({ offset: 1 }).setHTML(
-      "<p>Exact location will be provided after booking!</p>",
+      `<p class="popup">You'll be living here!</p>`,
     ),
   )
   .addTo(map);
-
-// const marker = new mapboxgl.Marker({
-//   color: "#ef2755",
-// })
-//   .setLngLat(coordinates)
-//   .setPopup(
-//     new mapboxgl.Popup({ offset: 25 }).setHTML(
-//       "<p>Exact location will be provided after booking!</p>",
-//     ),
-//   )
-//   .addTo(map);
