@@ -38,8 +38,7 @@ module.exports.createListing = async (req, res) => {
   newListing.owner = req.user._id;
   newListing.image = { url, filename };
   newListing.geometry = response.body.features[0].geometry;
-  let savedListing = await newListing.save();
-  console.log(savedListing);
+  await newListing.save();
   req.flash("success", "New StayNest Created!");
   res.redirect("/listings");
 };

@@ -1,9 +1,14 @@
+require("dotenv").config({
+  path: "../.env",
+});
+
 const mongoose = require("mongoose");
 const initData = require("./data");
 const Listing = require("../models/listing");
 const { cloudinary } = require("../cloudConfig");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mapToken = process.env.MAP_TOKEN;
+
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
