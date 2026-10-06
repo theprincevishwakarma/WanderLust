@@ -20,3 +20,21 @@
     );
   });
 })();
+
+const filterList = document.querySelector("#filterList");
+const leftBtn = document.querySelector("#leftBtn");
+const rightBtn = document.querySelector("#rightBtn");
+
+rightBtn.addEventListener("click", () => {
+  filterList.scrollBy({
+    left: 300,
+    behavior: "smooth",
+  });
+});
+
+leftBtn.addEventListener("click", () => {
+  filterList.scrollBy({
+    left: -300,
+    behavior: "smooth",
+  });
+});
