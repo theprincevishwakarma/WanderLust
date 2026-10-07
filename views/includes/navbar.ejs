@@ -32,7 +32,7 @@
         <a class="nav-link login-btn elevation-1" href="/login"><b>Log in</b></a>
         <% } %>
         <% if(currUser) {%>
-          <form action="/profile" method="get">
+          <form action="/<%= currUser.username %>/profile" method="get">
             <button class="user-profile-icon ms-3"><b><i class="fa-regular fa-circle-user"></i></b></button>
           </form>
         <% } %>

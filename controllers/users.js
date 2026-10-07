@@ -41,3 +41,8 @@ module.exports.logout = (req, res, next) => {
     res.redirect("/listings");
   });
 };
+
+module.exports.renderUserProfile = async (req, res) => {
+  let { username } = req.params;
+  res.render("./users/profile", { username });
+};
