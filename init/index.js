@@ -5,6 +5,8 @@ require("dotenv").config({
 const mongoose = require("mongoose");
 const initData = require("./data");
 const Listing = require("../models/listing");
+const Review = require("../models/review");
+const User = require("../models/user");
 const { cloudinary } = require("../cloudConfig");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mapToken = process.env.MAP_TOKEN;
@@ -34,6 +36,7 @@ const initDB = async () => {
   }
 
   await Listing.deleteMany({});
+  await Review.deleteMany({});
   initData.data = await Promise.all(
     initData.data.map(async (obj) => {
       const response = await geocodingClient

@@ -1,69 +1,67 @@
 <% layout("/layouts/boilerplate") -%>
 <div id="filters">
   <button class="scroll-btn left" id="leftBtn">
-    <i class="fa-solid fa-chevron-left"></i>
+    <i class="fa-solid fa-chevron-left icon red"></i>
   </button>
   <div class="filter-list" id="filterList">
     <div class="filter">
-      <div><i class="fa-solid fa-fire"></i></div>
-      <p>Trending</p>
+      <div><i class="fa-solid fa-fire  icon"></i></div>
+      <p class="title">Trending</p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-bed"></i></div>
-      <p>Rooms</p>
+      <div><i class="fa-solid fa-bed icon"></i></div>
+      <p class="title">Rooms</p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-mountain-city"></i></div>
-      <p>Iconic Cities</p>
+      <div><i class="fa-solid fa-mountain-city icon"></i></div>
+      <p class="title">Iconic Cities</p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-bowl-food"></i></div>
-      <p>Food</p>
+      <div><i class="fa-solid fa-bowl-food icon"></i></div>
+      <p class="title">Food</p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-mountain"></i></div>
-      <p>Mountains</p>
+      <div><i class="fa-solid fa-mountain icon"></i></div>
+      <p class="title">Mountains</p>
     </div>
     <div class="filter">
-      <div><i class="fa-brands fa-fort-awesome"></i></div>
-      <p>Castles</p>
+      <div><i class="fa-brands fa-fort-awesome icon"></i></div>
+      <p class="title">Castles</p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-person-swimming"></i></div>
-      <p>Amazing Pools</p>
+      <div><i class="fa-solid fa-person-swimming icon"></i></div>
+      <p class="title">Amazing Pools</p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-tents"></i></div>
-      <p>Camping</p>
+      <div><i class="fa-solid fa-tents icon"></i></div>
+      <p class="title">Camping</p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-cow"></i></div>
-      <p>Farms</p>
+      <div><i class="fa-solid fa-cow icon"></i></div>
+      <p class="title">Farms</p>
     </div>
     <div class="filter">
-      <div><i class="fa-solid fa-snowman"></i></div>
-      <p>Arctic</p>
+      <div><i class="fa-solid fa-snowman icon"></i></div>
+      <p class="title">Arctic</p>
     </div>
   </div>
   <button class="scroll-btn right" id="rightBtn">
-    <i class="fa-solid fa-chevron-right"></i>
+    <i class="fa-solid fa-chevron-right icon red"></i>
   </button>
   <div class="form-check form-switch form-check-reverse gst-toggle">
-    <input class="form-check-input" type="checkbox" id="switchCheckReverse">
-    <label class="form-check-label" for="switchCheckReverse">Show price with GST</label>
+    <input class="form-check-input form-check-input" type="checkbox" id="switchCheckReverse">
+    <label class="form-check-label title" for="switchCheckReverse">Show price with GST</label>
   </div>
 </div>
 <div class="row row-cols-1 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
   <% for(let listing of allListings){ %>
     <a class="listing-link" href="/listings/<%= listing._id %>">
-      <div class="card col listing-card">
-        <img src="<%= listing.image.url %>" class="card-img-top" alt="StayNest" style="height: 20rem;">
+      <div class="card col listing-card elevation-2">
+        <img src="<%= listing.image.url %>" class="card-img-top elevation-2" alt="StayNest" style="height: 20rem;">
         <div class="card-img-overlay"></div>
         <div class="card-body">
-          <p class="card-text"><b><%= listing.title %></b>
-            <br>
-            &#8377; <%= listing.price.toLocaleString("en-IN") %>
-          </p>
+          <p class="card-text title ms-3"><b><%= listing.title %></b></p>
+          <p class="card-text title ms-3">&#8377; <%= listing.price.toLocaleString("en-IN") %></p>
         </div>
       </div>
     </a>

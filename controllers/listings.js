@@ -9,6 +9,12 @@ module.exports.index = async (req, res) => {
   res.render("./listings/index", { allListings });
 };
 
+// home search for destination
+module.exports.renderSearchListing = async (req, res) => {
+  let query = req.query;
+  res.send(query);
+};
+
 module.exports.renderNewForm = (req, res) => {
   res.render("./listings/new");
 };

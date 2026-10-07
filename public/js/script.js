@@ -38,3 +38,19 @@ leftBtn.addEventListener("click", () => {
     behavior: "smooth",
   });
 });
+
+const searchBox = document.querySelector(".search");
+const text = "Your next destination";
+
+let index = 0;
+
+function typeEffect() {
+  searchBox.placeholder = text.slice(0, index);
+  index++;
+
+  if (index <= text.length) {
+    setTimeout(typeEffect, 65);
+  }
+}
+
+typeEffect();

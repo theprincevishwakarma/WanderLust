@@ -1,10 +1,10 @@
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top elevation-3">
   <div class="container-fluid">
     <a class="navbar-brand navbar-logo" href="/listings"
       ><img
         src="https://res.cloudinary.com/frtasp0i/image/upload/v1789910962/StayNest-logo.svg"
         alt="StayNest"
-        class="navbar-logo-img"
+        class="navbar-logo-img logo"
     /></a>
     <button
       class="navbar-toggler"
@@ -19,17 +19,21 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" href="/listings">Explore StayNest</a>
+        <a class="nav-link title" href="/listings">Explore StayNest</a>
       </div>
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">StayNest your home</a>
+      <form class="d-flex" role="search" action="/listings/search" method="get">
+        <input class="form-control me-2 search" name="q" type="search" aria-label="Search"/>
+        <button class="btn btn-outline-success btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+      <div class="navbar-nav">
+        <a class="nav-link title" href="/listings/new">Become a host</a>
         <% if(!currUser) {%>
-        <a class="nav-link" href="/signup"><b>Sign up</b></a>
-        <a class="nav-link" href="/login"><b>Log in</b></a>
+        <a class="nav-link title" href="/signup"><b>Sign up</b></a>
+        <a class="nav-link login-btn elevation-1" href="/login"><b>Log in</b></a>
         <% } %>
         <% if(currUser) {%>
-          <form action="/logout" method="post">
-            <button class="logout-btn"><b>Log out</b></button>
+          <form action="/profile" method="get">
+            <button class="user-profile-icon ms-3"><b><i class="fa-regular fa-circle-user"></i></b></button>
           </form>
         <% } %>
       </div>
