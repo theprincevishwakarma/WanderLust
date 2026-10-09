@@ -11,7 +11,6 @@
     <div class="profile-info">
       <div class="row">
         <h2 class="col col-2 me-4"><%= currUser.name.firstName %></h2>
-        <h2 class="col col-1"><%= currUser.name.middleName %></h2>
         <h2 class="col col-4"><%= currUser.name.lastName %></h2>
       </div>
       <p>@<%= currUser.username %></p>
@@ -27,25 +26,6 @@
       Edit Profile
     </a>
   </section>
-
-  <!-- ================= STATS ================= -->
-  <!-- 
-  <section class="profile-stats">
-    <div class="profile-stat">
-      <h3>12</h3>
-      <p>Bookings</p>
-    </div>
-
-    <div class="profile-stat">
-      <h3>4</h3>
-      <p>Reviews</p>
-    </div>
-
-    <div class="profile-stat">
-      <h3>2</h3>
-      <p>Listings</p>
-    </div>
-  </section> -->
 
   <!-- ================= PERSONAL INFORMATION ================= -->
 
@@ -65,7 +45,7 @@
 
         <div>
           <span>Email</span>
-          <p><%= currUser.email || "Not provided" %></p>
+          <p><%= currUser.email %></p>
         </div>
       </div>
 
@@ -78,7 +58,7 @@
 
         <div>
           <span>Phone</span>
-          <p><%= currUser.phone || "Not provided" %></p>
+          <p><%= currUser.phone %></p>
         </div>
       </div>
 
@@ -91,7 +71,7 @@
 
         <div>
           <span>Location</span>
-          <p><%= currUser.location || "Not provided" %></p>
+          <p><%= currUser.location %></p>
         </div>
       </div>
 
@@ -107,62 +87,6 @@
           <p>Verified StayNest account</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ================= STAYNEST ACTIVITY ================= -->
-
-  <section class="profile-section">
-    <div class="section-heading">
-      <h3>Your StayNest</h3>
-      <p>Manage your StayNest activity</p>
-    </div>
-
-    <div class="profile-actions">
-      <!-- Wishlist -->
-
-      <a href="/:username/wishlist" class="profile-action">
-        <div class="action-icon">
-          <i class="fa-regular fa-heart"></i>
-        </div>
-
-        <div class="action-content">
-          <b>Wishlist</b>
-          <span>Your saved stays</span>
-        </div>
-
-        <i class="fa-solid fa-chevron-right action-arrow"></i>
-      </a>
-
-      <!-- Bookings -->
-
-      <a href="/:username/bookings" class="profile-action">
-        <div class="action-icon">
-          <i class="fa-solid fa-calendar-check"></i>
-        </div>
-
-        <div class="action-content">
-          <b>Your Bookings</b>
-          <span>View your upcoming and previous stays</span>
-        </div>
-
-        <i class="fa-solid fa-chevron-right action-arrow"></i>
-      </a>
-
-      <!-- Listings -->
-
-      <a href="/:username/listings" class="profile-action">
-        <div class="action-icon">
-          <i class="fa-solid fa-house"></i>
-        </div>
-
-        <div class="action-content">
-          <b>Your Listings</b>
-          <span>Manage properties you have listed</span>
-        </div>
-
-        <i class="fa-solid fa-chevron-right action-arrow"></i>
-      </a>
     </div>
   </section>
 

@@ -70,9 +70,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", userRouter);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
 // Page Not Found
 app.all("*splat", (req, res, next) => {

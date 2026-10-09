@@ -1,4 +1,6 @@
 const User = require("../models/user");
+const Listing = require("../models/listing");
+const Review = require("../models/review");
 
 module.exports.renderSignupForm = (req, res) => {
   res.render("./users/signup", { showSearch: false });
@@ -44,6 +46,13 @@ module.exports.logout = (req, res, next) => {
 };
 
 module.exports.renderUserProfile = async (req, res) => {
-  let { username } = req.params;
-  res.render("./users/profile", { username, showSearch: false });
+  res.render("./users/profile", { showSearch: false });
+};
+
+module.exports.destroyUser = async (req, res) => {
+  let { currUser } = res.locals;
+  await Listing.deleteMany({ owner: currUser._id });
+  await Review.deleteMany({ author: currUser._id });
+  await User.findByIdAndDelete(currUser._id);
+  res.redirect("/listings");
 };

@@ -24,6 +24,9 @@ router
   );
 
 router.post("/logout", isLoggedIn, userController.logout);
-router.get("/:username/profile", isLoggedIn, userController.renderUserProfile);
+router
+  .route("/:username")
+  .get(isLoggedIn, userController.renderUserProfile)
+  .delete(isLoggedIn, userController.destroyUser);
 
 module.exports = router;
