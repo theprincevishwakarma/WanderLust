@@ -71,3 +71,7 @@ module.exports.updateUser = async (req, res) => {
 
   res.redirect(`/${updatedUser.username}`);
 };
+
+module.exports.renderChangePasswordForm = (req, res) => {
+  res.render("./users/newpassword", { showSearch: false });
+};

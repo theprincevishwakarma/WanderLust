@@ -31,5 +31,10 @@ router
   .delete(isLoggedIn, wrapAasync(userController.destroyUser));
 
 router.get("/:username/edit", isLoggedIn, userController.renderEditForm);
+router.get(
+  "/:username/newpassword",
+  isLoggedIn,
+  userController.renderChangePasswordForm,
+);
 
 module.exports = router;
