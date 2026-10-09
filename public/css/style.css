@@ -213,9 +213,20 @@ select:focus {
 }
 
 .navbar-collapse {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  justify-content: space-between !important;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+@media (min-width: 767px) {
+  .navbar-collapse {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .login-btn {
+    width: 5rem;
+  }
 }
 
 .search {
