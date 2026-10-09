@@ -48,8 +48,10 @@ module.exports.userSchema = Joi.object({
         "string.empty": "Email address is required.",
         "string.max": "Email cannot exceed 254 characters.",
       }),
-    firstName: Joi.string().required(),
-    lastName: Joi.string().required(),
+    name: Joi.object({
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
+    }).required(),
     phoneNo: Joi.number().required(),
     location: Joi.string().required(),
   }).required(),

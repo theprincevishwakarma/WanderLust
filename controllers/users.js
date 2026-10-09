@@ -8,9 +8,7 @@ module.exports.renderSignupForm = (req, res) => {
 
 module.exports.signup = async (req, res) => {
   try {
-    let { username, email, password, firstName, lastName, phoneNo, location } =
-      req.body.user;
-    let name = { firstName, lastName };
+    let { username, email, password, name, phoneNo, location } = req.body.user;
     const newUser = new User({ email, username, name, phoneNo, location });
     const registeredUser = await User.register(newUser, password);
     req.login(registeredUser, (err) => {
@@ -60,4 +58,8 @@ module.exports.destroyUser = async (req, res) => {
 
 module.exports.renderEditForm = (req, res) => {
   res.render("./users/edit");
+};
+
+module.exports.updateUser = async (req, res) => {
+  res.send("update");
 };

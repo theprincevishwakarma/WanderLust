@@ -27,6 +27,7 @@ router.post("/logout", isLoggedIn, userController.logout);
 router
   .route("/:username")
   .get(isLoggedIn, userController.renderUserProfile)
+  .put(isLoggedIn, userController.updateUser)
   .delete(isLoggedIn, userController.destroyUser);
 
 router.get("/:username/edit", isLoggedIn, userController.renderEditForm);
