@@ -9,21 +9,22 @@
     </div>
 
     <div class="profile-info">
-      <div class="row">
-        <h2 class="col col-2 me-4"><%= currUser.name.firstName %></h2>
-        <h2 class="col col-4"><%= currUser.name.lastName %></h2>
-      </div>
-      <p>@<%= currUser.username %></p>
+      <h2 class="profile-name">
+        <%= [currUser.name.firstName,
+        currUser.name.lastName].filter(Boolean).join(" ") %>
+      </h2>
 
-      <span>
+      <p class="profile-username">@<%= currUser.username %></p>
+
+      <span class="profile-member">
         <i class="fa-regular fa-calendar"></i>
         Member of StayNest
       </span>
     </div>
 
-    <a href="/:username/profile/edit" class="edit-profile-btn">
+    <a href="<%= currUser.username %>/edit" class="edit-profile-btn">
       <i class="fa-regular fa-pen-to-square"></i>
-      Edit Profile
+      <span>Edit Profile</span>
     </a>
   </section>
 
@@ -118,8 +119,31 @@
         </button>
       </form>
 
+      <!-- change password -->
+      <a
+        href="<%= currUser.username %>/newpassword"
+        class="account-action logout-action"
+        onclick="
+          event.preventDefault();
+          document.getElementById('logout-form').requestSubmit();
+        "
+      >
+        <div class="account-action-left">
+          <div class="account-icon logout-icon">
+            <i class="fa-solid fa-key"></i>
+          </div>
+
+          <div>
+            <b>Change Password</b>
+            <span>Update your password to keep your account secure</span>
+          </div>
+        </div>
+
+        <i class="fa-solid fa-chevron-right"></i>
+      </a>
+
       <!-- DELETE ACCOUNT -->
-      <form action="/:username?_method=DELETE" method="post">
+      <form action="/<%= currUser.username %>?_method=DELETE" method="post">
         <button
           type="button"
           class="account-action delete-action"

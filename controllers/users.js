@@ -57,3 +57,7 @@ module.exports.destroyUser = async (req, res) => {
   await User.findByIdAndDelete(currUser._id);
   res.redirect("/listings");
 };
+
+module.exports.renderEditForm = (req, res) => {
+  res.render("./users/edit");
+};

@@ -29,4 +29,6 @@ router
   .get(isLoggedIn, userController.renderUserProfile)
   .delete(isLoggedIn, userController.destroyUser);
 
+router.get("/:username/edit", isLoggedIn, userController.renderEditForm);
+
 module.exports = router;
