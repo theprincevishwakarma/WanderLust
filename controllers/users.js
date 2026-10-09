@@ -28,7 +28,7 @@ module.exports.renderLoginForm = (req, res) => {
   res.render("./users/login", { showSearch: false });
 };
 
-module.exports.login = async (req, res) => {
+module.exports.login = (req, res) => {
   req.flash("success", "Welcome back to StayNest!");
   let redirectUrl = res.locals.redirectUrl || "/listings";
   res.redirect(redirectUrl);
@@ -44,7 +44,7 @@ module.exports.logout = (req, res, next) => {
   });
 };
 
-module.exports.renderUserProfile = async (req, res) => {
+module.exports.renderUserProfile = (req, res) => {
   res.render("./users/profile", { showSearch: false });
 };
 
@@ -61,5 +61,13 @@ module.exports.renderEditForm = (req, res) => {
 };
 
 module.exports.updateUser = async (req, res) => {
-  res.send("update");
+  const updatedUser = await User.findByIdAndUpdate(
+    res.locals.currUser._id,
+    {
+      ...req.body.user,
+    },
+    { new: true, runValidators: true },
+  );
+
+  res.redirect(`/${updatedUser.username}`);
 };
