@@ -9,9 +9,6 @@ const userSchema = new Schema({
       type: String,
       required: true,
     },
-    middleName: {
-      type: String,
-    },
     lastName: {
       type: String,
       required: true,

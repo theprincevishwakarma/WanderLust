@@ -30,7 +30,6 @@ module.exports.userSchema = Joi.object({
       tlds: { allow: ["com", "net"] },
     }),
     firstName: Joi.string().required(),
-    middleName: Joi.string(),
     lastName: Joi.string().required(),
   }).required(),
 });

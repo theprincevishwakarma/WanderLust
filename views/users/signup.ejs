@@ -7,31 +7,24 @@
     <h3>SignUp on StayNest</h3>
     <form action="/signup" method="POST" class="needs-validation" novalidate>
       <div class="row mt-4">
-        <div class="col col-12 col-lg-4 mb-3">
+        <div class="col col-12 col-lg-6 mb-3">
           <label for="firstname" class="form-label">First Name</label>
           <input
             type="text"
             name="user[firstName]"
             id="firstname"
+            placeholder="Prince"
             class="form-control"
             required
           />
         </div>
-        <div class="col col-12 col-lg-4 mb-3">
-          <label for="middlename" class="form-label">Middle Name</label>
-          <input
-            type="text"
-            name="user[middleName]"
-            id="middleName"
-            class="form-control"
-          />
-        </div>
-        <div class="col col-12 col-lg-4 mb-3">
+        <div class="col col-12 col-lg-6 mb-3">
           <label for="lastname" class="form-label">Last Name</label>
           <input
             type="text"
             name="user[lastName]"
             id="lastname"
+            placeholder="Vishwakarma"
             class="form-control"
             required
           />
@@ -43,7 +36,7 @@
           type="text"
           name="user[username]"
           id="username"
-          placeholder="create new username"
+          placeholder="Unique username"
           class="form-control"
           required
         />
