@@ -8,9 +8,10 @@ module.exports.renderSignupForm = (req, res) => {
 
 module.exports.signup = async (req, res) => {
   try {
-    let { username, email, password, firstName, lastName } = req.body.user;
+    let { username, email, password, firstName, lastName, phoneNo, location } =
+      req.body.user;
     let name = { firstName, lastName };
-    const newUser = new User({ email, username, name });
+    const newUser = new User({ email, username, name, phoneNo, location });
     const registeredUser = await User.register(newUser, password);
     req.login(registeredUser, (err) => {
       if (err) {
