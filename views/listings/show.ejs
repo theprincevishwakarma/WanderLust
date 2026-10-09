@@ -4,8 +4,8 @@
   const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
 
 </script>
-<div class="row mt-3">
-  <div class="col-8 offset-3 title">
+<div class="row mt-3 title">
+  <div class="col-8 offset-3">
     <h3 class="mt-3"><%= listing.title %></h3>
   </div>
   <div class="card col-6 offset-3 show-card listing-card elevation-2">
@@ -14,7 +14,7 @@
       class="card-img-top show-img"
       alt="StayNest"
     />
-    <div class="card-body title ms-3">
+    <div class="card-body ms-3">
       <p class="card-text">
         Owned by <i><%= listing.owner.username %></i> 
       </p>
@@ -51,7 +51,7 @@
     <hr/>
     <h4>Leave a Review</h4>
     <form
-      class="mb-3 needs-validation"
+      class="mb-5 needs-validation"
       action="/listings/<%= listing._id %>/reviews"
       method="POST"
       novalidate
@@ -81,21 +81,21 @@
         ></textarea>
         <div class="invalid-feedback">Please give your feedback.</div>
       </div>
-      <button class="btn btn-outline-dark">Submit</button>
+      <button class="btn btn-dark add-btn btn-red btn-search">Submit</button>
     </form>
     <% } %>
     <% if(listing.reviews.length) {%>
     <hr />
-    <div class="row">
+    <div class="row title">
       <p><b>All Reviews</b></p>
       <% for(let review of listing.reviews) {%>
-        <div class="card col-5 ms-3 mb-3">
+        <div class="card col-5 ms-3 mb-3 elevation-2">
           <div class="card-body">
             <div class="mt-1 mb-0 card-title d-flex justify-content-between">
               <p class="mb-0"><b>@<%= review.author.username %></b></p>
               <% if(currUser && review.author._id.equals(currUser._id)) {%>
                 <form class="mb-0" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
-                  <button class="review-del-btn"><i class="fa-regular fa-trash-can"></i></button>
+                  <button class="review-del-btn"><i class="fa-regular fa-trash-can icon"></i></button>
                 </form>
               <% } %>
             </div>
@@ -109,7 +109,7 @@
     <hr>
     <div class="mb-3">
       <h3>Where you'll be</h3>
-      <div id="map"></div>
+      <div class="elevation-2" id="map"></div>
     </div>
   </div>
 </div>

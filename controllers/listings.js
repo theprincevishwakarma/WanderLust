@@ -16,7 +16,7 @@ module.exports.renderSearchListing = async (req, res) => {
 };
 
 module.exports.renderNewForm = (req, res) => {
-  res.render("./listings/new");
+  res.render("./listings/new", { showSearch: false });
 };
 
 module.exports.showListing = async (req, res) => {
@@ -59,7 +59,11 @@ module.exports.renderEditForm = async (req, res) => {
 
   let originalImageUrl = listing.image.url;
   originalImageUrl = originalImageUrl.replace("/upload", "/upload/q_40");
-  res.render("./listings/edit", { listing, originalImageUrl });
+  res.render("./listings/edit", {
+    listing,
+    originalImageUrl,
+    showSearch: false,
+  });
 };
 
 module.exports.updateListing = async (req, res) => {

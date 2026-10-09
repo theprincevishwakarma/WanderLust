@@ -1,7 +1,271 @@
 <% layout("/layouts/boilerplate") -%>
 
-<h1>username: <%= username%></h1>
+<div class="profile-page">
+  <!-- ================= PROFILE HEADER ================= -->
 
-<form action="/logout" method="post">
-  <button class="btn btn-dark">logout</button>
-</form>
+  <section class="profile-header">
+    <div class="profile-avatar">
+      <i class="fa-solid fa-user"></i>
+    </div>
+
+    <div class="profile-info">
+      <div class="row">
+        <h2 class="col col-2 me-4"><%= currUser.name.firstName %></h2>
+        <h2 class="col col-1"><%= currUser.name.middleName %></h2>
+        <h2 class="col col-4"><%= currUser.name.lastName %></h2>
+      </div>
+      <p>@<%= currUser.username %></p>
+
+      <span>
+        <i class="fa-regular fa-calendar"></i>
+        Member of StayNest
+      </span>
+    </div>
+
+    <a href="/:username/profile/edit" class="edit-profile-btn">
+      <i class="fa-regular fa-pen-to-square"></i>
+      Edit Profile
+    </a>
+  </section>
+
+  <!-- ================= STATS ================= -->
+  <!-- 
+  <section class="profile-stats">
+    <div class="profile-stat">
+      <h3>12</h3>
+      <p>Bookings</p>
+    </div>
+
+    <div class="profile-stat">
+      <h3>4</h3>
+      <p>Reviews</p>
+    </div>
+
+    <div class="profile-stat">
+      <h3>2</h3>
+      <p>Listings</p>
+    </div>
+  </section> -->
+
+  <!-- ================= PERSONAL INFORMATION ================= -->
+
+  <section class="profile-section">
+    <div class="section-heading">
+      <h3>Personal Information</h3>
+      <p>Your account information</p>
+    </div>
+
+    <div class="profile-details">
+      <!-- Email -->
+
+      <div class="profile-detail">
+        <div class="detail-icon">
+          <i class="fa-regular fa-envelope"></i>
+        </div>
+
+        <div>
+          <span>Email</span>
+          <p><%= currUser.email || "Not provided" %></p>
+        </div>
+      </div>
+
+      <!-- Phone -->
+
+      <div class="profile-detail">
+        <div class="detail-icon">
+          <i class="fa-solid fa-phone"></i>
+        </div>
+
+        <div>
+          <span>Phone</span>
+          <p><%= currUser.phone || "Not provided" %></p>
+        </div>
+      </div>
+
+      <!-- Location -->
+
+      <div class="profile-detail">
+        <div class="detail-icon">
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+
+        <div>
+          <span>Location</span>
+          <p><%= currUser.location || "Not provided" %></p>
+        </div>
+      </div>
+
+      <!-- Account -->
+
+      <div class="profile-detail">
+        <div class="detail-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+
+        <div>
+          <span>Account</span>
+          <p>Verified StayNest account</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STAYNEST ACTIVITY ================= -->
+
+  <section class="profile-section">
+    <div class="section-heading">
+      <h3>Your StayNest</h3>
+      <p>Manage your StayNest activity</p>
+    </div>
+
+    <div class="profile-actions">
+      <!-- Wishlist -->
+
+      <a href="/:username/wishlist" class="profile-action">
+        <div class="action-icon">
+          <i class="fa-regular fa-heart"></i>
+        </div>
+
+        <div class="action-content">
+          <b>Wishlist</b>
+          <span>Your saved stays</span>
+        </div>
+
+        <i class="fa-solid fa-chevron-right action-arrow"></i>
+      </a>
+
+      <!-- Bookings -->
+
+      <a href="/:username/bookings" class="profile-action">
+        <div class="action-icon">
+          <i class="fa-solid fa-calendar-check"></i>
+        </div>
+
+        <div class="action-content">
+          <b>Your Bookings</b>
+          <span>View your upcoming and previous stays</span>
+        </div>
+
+        <i class="fa-solid fa-chevron-right action-arrow"></i>
+      </a>
+
+      <!-- Listings -->
+
+      <a href="/:username/listings" class="profile-action">
+        <div class="action-icon">
+          <i class="fa-solid fa-house"></i>
+        </div>
+
+        <div class="action-content">
+          <b>Your Listings</b>
+          <span>Manage properties you have listed</span>
+        </div>
+
+        <i class="fa-solid fa-chevron-right action-arrow"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= ACCOUNT ================= -->
+
+  <section class="profile-section account-section">
+    <div class="section-heading">
+      <h3>Account</h3>
+      <p>Manage your StayNest account</p>
+    </div>
+
+    <div class="account-actions">
+      <!-- LOGOUT -->
+
+      <form action="/logout" method="POST">
+        <button type="submit" class="account-action logout-action">
+          <div class="account-action-left">
+            <div class="account-icon logout-icon">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </div>
+
+            <div>
+              <b>Log out</b>
+              <span>Sign out of your StayNest account</span>
+            </div>
+          </div>
+
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </form>
+
+      <!-- DELETE ACCOUNT -->
+      <form action="/:username?_method=DELETE" method="post">
+        <button
+          type="button"
+          class="account-action delete-action"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteAccountModal"
+        >
+          <div class="account-action-left">
+            <div class="account-icon delete-icon">
+              <i class="fa-regular fa-trash-can"></i>
+            </div>
+
+            <div>
+              <b>Delete account</b>
+              <span>Permanently delete your StayNest account</span>
+            </div>
+          </div>
+
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- ================================================= -->
+<!-- DELETE ACCOUNT MODAL -->
+<!-- ================================================= -->
+
+<div
+  class="modal fade"
+  id="deleteAccountModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content delete-modal">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete your account?</h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="delete-warning-icon">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+
+        <p>Are you sure you want to delete your StayNest account?</p>
+
+        <small>
+          This action cannot be undone. Your account and associated data may be
+          permanently deleted.
+        </small>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="cancel-btn" data-bs-dismiss="modal">
+          Cancel
+        </button>
+
+        <form action="/account?_method=DELETE" method="POST">
+          <button type="submit" class="delete-confirm-btn">
+            Delete Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

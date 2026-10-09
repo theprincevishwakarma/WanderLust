@@ -1,13 +1,15 @@
 const User = require("../models/user");
 
 module.exports.renderSignupForm = (req, res) => {
-  res.render("./users/signup");
+  res.render("./users/signup", { showSearch: false });
 };
 
 module.exports.signup = async (req, res) => {
   try {
-    let { username, email, password } = req.body;
-    const newUser = new User({ email, username });
+    let { username, email, password, firstName, middleName, lastName } =
+      req.body.user;
+    let name = { firstName, middleName, lastName };
+    const newUser = new User({ email, username, name });
     const registeredUser = await User.register(newUser, password);
     req.login(registeredUser, (err) => {
       if (err) {
@@ -23,7 +25,7 @@ module.exports.signup = async (req, res) => {
 };
 
 module.exports.renderLoginForm = (req, res) => {
-  res.render("./users/login");
+  res.render("./users/login", { showSearch: false });
 };
 
 module.exports.login = async (req, res) => {
@@ -44,5 +46,5 @@ module.exports.logout = (req, res, next) => {
 
 module.exports.renderUserProfile = async (req, res) => {
   let { username } = req.params;
-  res.render("./users/profile", { username });
+  res.render("./users/profile", { username, showSearch: false });
 };
