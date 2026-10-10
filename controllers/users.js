@@ -62,6 +62,16 @@ module.exports.renderEditForm = (req, res) => {
 
 module.exports.updateUser = async (req, res) => {
   const user = await User.findById(req.user._id);
+  let { username } = req.body.user;
+  const existingUser = await User.findOne({
+    username,
+    _id: { $ne: user._id },
+  });
+
+  if (existingUser) {
+    req.flash("error", "Username already exists!");
+    return res.redirect(`/${user.username}/edit`);
+  }
 
   user.name.firstName = req.body.user.name.firstName;
   user.name.lastName = req.body.user.name.lastName;
