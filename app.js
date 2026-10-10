@@ -95,7 +95,7 @@ app.all("*splat", (req, res, next) => {
 // Error Handler middleware
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Some Error Occurred!" } = err;
-  res.status(statusCode).render("Error", { message });
+  res.status(statusCode).render("./Error.ejs", { message });
 });
 
 app.listen("8080", () => {
