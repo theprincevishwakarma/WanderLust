@@ -13,7 +13,7 @@ const mapToken = process.env.MAP_TOKEN;
 
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const dbUrl = process.env.ATLUSDB_URL;
 
 main()
   .then(() => {
@@ -24,7 +24,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(dbUrl);
 }
 
 const initDB = async () => {
@@ -48,7 +48,7 @@ const initDB = async () => {
 
       return {
         ...obj,
-        owner: "6ac8d8e85d7e356ec5f0b75b",
+        owner: "6ac9bd199894bd65cc0f3f46",
         geometry: response.body.features[0].geometry,
       };
     }),
