@@ -48,7 +48,7 @@ const initDB = async () => {
 
       return {
         ...obj,
-        owner: "6ac8c1692720431d12ec1296",
+        owner: "6ac8d8e85d7e356ec5f0b75b",
         geometry: response.body.features[0].geometry,
       };
     }),

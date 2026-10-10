@@ -68,10 +68,29 @@ module.exports.updateUser = async (req, res) => {
     },
     { new: true, runValidators: true },
   );
-
+  req.flash("success", "Information update successfully!");
   res.redirect(`/${updatedUser.username}`);
 };
 
 module.exports.renderChangePasswordForm = (req, res) => {
   res.render("./users/newpassword", { showSearch: false });
+};
+
+module.exports.updatePassword = async (req, res) => {
+  let { oldpassword, newpassword, newpasswordconfirm } = req.body;
+
+  if (!(newpassword === newpasswordconfirm)) {
+    req.flash("error", "Confirm password does not match!");
+    return res.redirect(`/${req.user.username}/newpassword`);
+  }
+
+  try {
+    await req.user.changePassword(oldpassword, newpasswordconfirm);
+
+    req.flash("success", "Password changed successfully!");
+    res.redirect(`/${req.user.username}`);
+  } catch (err) {
+    req.flash("error", "Old password is incorrect!");
+    res.redirect(`/${req.user.username}/newpassword`);
+  }
 };

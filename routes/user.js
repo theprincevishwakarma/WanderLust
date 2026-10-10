@@ -28,6 +28,7 @@ router
   .route("/:username")
   .get(isLoggedIn, userController.renderUserProfile)
   .put(isLoggedIn, wrapAasync(userController.updateUser))
+  .patch(isLoggedIn, wrapAasync(userController.updatePassword))
   .delete(isLoggedIn, wrapAasync(userController.destroyUser));
 
 router.get("/:username/edit", isLoggedIn, userController.renderEditForm);

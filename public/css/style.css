@@ -1062,6 +1062,14 @@ footer {
   background: #fff8f8;
 }
 
+/* change password form */
+
+.btn-Change-password {
+  width: 9rem;
+  height: 2.7rem;
+  font-size: 0.8rem;
+}
+
 /* =========================================
    DELETE MODAL
 ========================================= */
