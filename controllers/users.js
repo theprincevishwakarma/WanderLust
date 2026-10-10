@@ -61,15 +61,22 @@ module.exports.renderEditForm = (req, res) => {
 };
 
 module.exports.updateUser = async (req, res) => {
-  const updatedUser = await User.findByIdAndUpdate(
-    res.locals.currUser._id,
-    {
-      ...req.body.user,
-    },
-    { new: true, runValidators: true },
-  );
-  req.flash("success", "Information update successfully!");
-  res.redirect(`/${updatedUser.username}`);
+  const user = await User.findById(req.user._id);
+
+  user.name.firstName = req.body.user.name.firstName;
+  user.name.lastName = req.body.user.name.lastName;
+  user.email = req.body.user.email;
+  user.location = req.body.user.location;
+  user.phoneNo = req.body.user.phoneNo;
+  user.username = req.body.user.username;
+
+  await user.save();
+
+  req.login(user, (err) => {
+    if (err) return next(err);
+    req.flash("success", "Information update successfully!");
+    res.redirect(`/${user.username}`);
+  });
 };
 
 module.exports.renderChangePasswordForm = (req, res) => {
