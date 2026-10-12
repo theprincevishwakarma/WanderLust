@@ -1,29 +1,29 @@
 <% layout("/layouts/boilerplate") -%>
 
-<div class="profile-page">
+<div class="profile-page title">
   <!-- ================= PROFILE HEADER ================= -->
 
   <section class="profile-header">
     <div class="profile-avatar">
-      <i class="fa-solid fa-user"></i>
+      <i class="fa-solid fa-user icon"></i>
     </div>
 
-    <div class="profile-info">
+    <div class="profile-info title">
       <h2 class="profile-name">
         <%= [currUser.name.firstName,
         currUser.name.lastName].filter(Boolean).join(" ") %>
       </h2>
 
-      <p class="profile-username">@<%= currUser.username %></p>
+      <p class="profile-username title">@<%= currUser.username %></p>
 
-      <span class="profile-member">
-        <i class="fa-regular fa-calendar"></i>
+      <span class="profile-member title">
+        <i class="fa-regular fa-calendar icon"></i>
         Member of StayNest
       </span>
     </div>
 
     <a href="<%= currUser.username %>/edit" class="edit-profile-btn">
-      <i class="fa-regular fa-pen-to-square"></i>
+      <i class="fa-regular fa-pen-to-square icon"></i>
       <span>Edit Profile</span>
     </a>
   </section>
@@ -41,7 +41,7 @@
 
       <div class="profile-detail">
         <div class="detail-icon">
-          <i class="fa-regular fa-envelope"></i>
+          <i class="fa-regular fa-envelope icon"></i>
         </div>
 
         <div>
@@ -54,7 +54,7 @@
 
       <div class="profile-detail">
         <div class="detail-icon">
-          <i class="fa-solid fa-phone"></i>
+          <i class="fa-solid fa-phone icon"></i>
         </div>
 
         <div>
@@ -67,7 +67,7 @@
 
       <div class="profile-detail">
         <div class="detail-icon">
-          <i class="fa-solid fa-location-dot"></i>
+          <i class="fa-solid fa-location-dot icon"></i>
         </div>
 
         <div>
@@ -80,7 +80,7 @@
 
       <div class="profile-detail">
         <div class="detail-icon">
-          <i class="fa-solid fa-shield-halved"></i>
+          <i class="fa-solid fa-shield-halved icon"></i>
         </div>
 
         <div>
@@ -93,7 +93,7 @@
 
   <!-- ================= ACCOUNT ================= -->
 
-  <section class="profile-section account-section">
+  <section class="profile-section account-section title">
     <div class="section-heading">
       <h3>Account</h3>
       <p>Manage your StayNest account</p>
@@ -106,16 +106,16 @@
         <button type="submit" class="account-action logout-action">
           <div class="account-action-left">
             <div class="account-icon logout-icon">
-              <i class="fa-solid fa-right-from-bracket"></i>
+              <i class="fa-solid fa-right-from-bracket icon"></i>
             </div>
 
-            <div>
+            <div class="title">
               <b>Log out</b>
               <span>Sign out of your StayNest account</span>
             </div>
           </div>
 
-          <i class="fa-solid fa-chevron-right"></i>
+          <i class="fa-solid fa-chevron-right icon"></i>
         </button>
       </form>
 
@@ -126,7 +126,7 @@
       >
         <div class="account-action-left">
           <div class="account-icon logout-icon">
-            <i class="fa-solid fa-key"></i>
+            <i class="fa-solid fa-key icon"></i>
           </div>
 
           <div>
@@ -135,7 +135,7 @@
           </div>
         </div>
 
-        <i class="fa-solid fa-chevron-right"></i>
+        <i class="fa-solid fa-chevron-right icon"></i>
       </a>
 
       <!-- DELETE ACCOUNT -->
@@ -148,16 +148,18 @@
         >
           <div class="account-action-left">
             <div class="account-icon delete-icon">
-              <i class="fa-regular fa-trash-can"></i>
+              <i class="fa-regular fa-trash-can icon"></i>
             </div>
 
             <div>
-              <b>Delete account</b>
-              <span>Permanently delete your StayNest account</span>
+              <b class="icon">Delete account</b>
+              <span class="title"
+                >Permanently delete your StayNest account</span
+              >
             </div>
           </div>
 
-          <i class="fa-solid fa-chevron-right"></i>
+          <i class="fa-solid fa-chevron-right icon"></i>
         </button>
       </form>
     </div>
@@ -169,7 +171,7 @@
 <!-- ================================================= -->
 
 <div
-  class="modal fade"
+  class="modal fade title"
   id="deleteAccountModal"
   tabindex="-1"
   aria-hidden="true"
@@ -188,7 +190,7 @@
 
       <div class="modal-body">
         <div class="delete-warning-icon">
-          <i class="fa-solid fa-triangle-exclamation"></i>
+          <i class="fa-solid fa-triangle-exclamation icon"></i>
         </div>
 
         <p>Are you sure you want to delete your StayNest account?</p>
