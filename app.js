@@ -20,8 +20,7 @@ const listingRouter = require("./routes/listing");
 const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
 
-// const dbUrl = process.env.ATLUSDB_URL;
-const dbUrl = "mongodb://127.0.0.1:27017/wanderlust";
+const dbUrl = process.env.ATLUSDB_URL;
 
 main()
   .then(() => {
