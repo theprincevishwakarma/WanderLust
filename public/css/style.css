@@ -650,6 +650,8 @@ footer {
 
 /* Individual filter */
 .filter {
+  text-decoration: none !important;
+  color: #000000;
   flex: 0 0 auto;
   margin-top: 1.5rem;
   text-align: center;

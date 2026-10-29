@@ -49,6 +49,42 @@
           </div>
         </div>
 
+        <div class="mb-3">
+          <label for="category" class="form-label">Category</label>
+
+          <select
+            name="listing[category]"
+            id="category"
+            class="form-select"
+            required
+          >
+            <option value="listing.category" selected disabled>
+              <%=listing.category%>
+            </option>
+
+            <option value="Trending">Trending</option>
+            <option value="Rooms">Rooms</option>
+            <option value="Iconic Cities">Iconic Cities</option>
+            <option value="Food">Food</option>
+            <option value="Mountains">Mountains</option>
+            <option value="Castles">Castles</option>
+            <option value="Amazing Pools">Amazing Pools</option>
+            <option value="Camping">Camping</option>
+            <option value="Farms">Farms</option>
+            <option value="Arctic">Arctic</option>
+            <option value="Cottage">Cottage</option>
+            <option value="Apartment">Apartment</option>
+          </select>
+
+          <div class="valid-feedback">
+            Great! Your StayNest category has been selected.
+          </div>
+
+          <div class="invalid-feedback">
+            Please select a category for your StayNest.
+          </div>
+        </div>
+
         <!-- Image + Price + Country -->
         <div class="row g-4 mb-4">
           <!-- Current Image -->
