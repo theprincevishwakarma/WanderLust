@@ -22,8 +22,8 @@
         <a class="nav-link title" href="/listings">Explore StayNest</a>
       </div>
       <% if (typeof showSearch === "undefined" || showSearch) { %>
-      <form class="d-flex" role="search" action="/listings/search" method="get">
-        <input class="form-control me-2 search" name="q" type="search" placeholder="Your next destination..." aria-label="Search"/>
+      <form class="d-flex" role="search" action="/listings" method="get">
+        <input class="form-control me-2 search" name="search" type="search" placeholder="Your next destination..." aria-label="Search" value="<%= typeof search !== 'undefined' ? search: ''%>"/>
         <button class="btn btn-outline-success btn-search search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
       </form>
       <%}%>
