@@ -128,5 +128,5 @@ module.exports.destroyListing = async (req, res) => {
   await req.user.save();
 
   req.flash("success", "StayNest Deleted!");
-  res.redirect("/listings");
+  res.redirect(`/${req.user.username}/listings`);
 };
