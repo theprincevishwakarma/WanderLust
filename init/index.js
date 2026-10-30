@@ -59,7 +59,7 @@ const initDB = async () => {
 
       return {
         ...obj,
-        category: "demo listings",
+        category: "demolistings",
         owner: userId,
         geometry: response.body.features[0].geometry,
       };

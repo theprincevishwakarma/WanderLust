@@ -115,9 +115,9 @@ module.exports.updatePassword = async (req, res) => {
 
 module.exports.renderAllListings = async (req, res) => {
   const listings = await Listing.find({ owner: req.user._id });
-  res.render("./users/listings", { listings, showSearch: false });
-};
-
-module.exports.renderAllBookings = async (req, res) => {
-  res.send("all Bookings");
+  if (listings.length != 0) {
+    return res.render("./users/listings", { listings, showSearch: false });
+  }
+  req.flash("success", "Create Your StayNest!");
+  res.redirect("/listings/new");
 };

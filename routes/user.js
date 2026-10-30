@@ -43,10 +43,5 @@ router.get(
   isLoggedIn,
   wrapAasync(userController.renderAllListings),
 );
-router.get(
-  "/:username/bookings",
-  isLoggedIn,
-  wrapAasync(userController.renderAllBookings),
-);
 
 module.exports = router;

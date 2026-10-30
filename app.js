@@ -93,7 +93,7 @@ app.get("/terms", (req, res) => {
   res.render("terms");
 });
 
-app.use("/book/stays/:id", bookingRouter);
+app.use("/book", bookingRouter);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);

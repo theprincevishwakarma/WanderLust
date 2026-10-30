@@ -1,0 +1,23 @@
+<% layout("/layouts/boilerplate") -%>
+
+<h2 class="mt-4 title">Your total bookings : <%=currUser.bookings%></h2>
+<div class="row mt-2 g-4">
+  <% for(let book of bookings){ %>
+    <div class="<%= bookings.length === 1
+            ? 'col-12 col-md-12 col-lg-12'
+            : bookings.length === 2
+            ? 'col-12 col-sm-6 col-lg-5'
+            : 'col-12 col-sm-6 col-lg-4' %>">
+      <a class="listing-link" href="/listings/<%= book.listingId._id %>">
+        <div class="card col listing-card elevation-2">
+          <img src="<%= book.listingId.image.url %>" class="card-img-top elevation-2" alt="StayNest" style="height: 20rem;">
+          <div class="card-img-overlay"></div>
+          <div class="card-body">
+            <p class="card-text title ms-3"><b><%= book.listingId.title %></b></p>
+            <p class="card-text title ms-3 price">&#8377; <%=book.totalPrice.toLocaleString("en-IN") %></p>
+          </div>
+        </div>
+      </a>
+    </div>
+  <% } %>
+</div>

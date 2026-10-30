@@ -6,12 +6,12 @@ const { required } = require("joi");
 
 const bookingSchema = new Schema(
   {
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    listing: {
+    listingId: {
       type: Schema.Types.ObjectId,
       ref: "Listing",
       required: true,
@@ -21,7 +21,7 @@ const bookingSchema = new Schema(
       required: true,
     },
 
-    checkout: {
+    checkOut: {
       type: Date,
       required: true,
     },

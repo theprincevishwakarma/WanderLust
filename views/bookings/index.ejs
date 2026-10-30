@@ -52,7 +52,7 @@
                     </p>
 
                     <form
-                        action="/listings/<%= listing._id %>/book"
+                        action="/book/stays/<%= listing._id %>"
                         method="POST"
                         id="sn-checkout-form"
                     >
@@ -75,6 +75,13 @@
                             name="booking[guests]"
                             id="sn-hidden-guests"
                             value="<%= demoGuests %>"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="booking[totalPrice]"
+                            id="sn-hidden-total-price"
+                            value=<%= demoTotal %>
                         >
 
                         <button type="submit" class="sn-payment-button">
