@@ -19,6 +19,7 @@ const User = require("./models/user");
 const listingRouter = require("./routes/listing");
 const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
+const bookingRouter = require("./routes/booking");
 
 const dbUrl = "mongodb://127.0.0.1:27017/wanderlust";
 // const dbUrl = process.env.ATLUSDB_URL;
@@ -84,6 +85,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/book/stays/:id", bookingRouter);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);

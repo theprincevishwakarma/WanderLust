@@ -1,0 +1,370 @@
+<% layout("/layouts/boilerplate") %>
+
+<%
+    const demoCheckIn = "2026-10-30";
+    const demoCheckOut = "2026-11-02";
+    const demoGuests = 1;
+
+    const nightlyPrice = Number(listing.price) || 0;
+    const demoNights = 3;
+    const roomTotal = Math.round(nightlyPrice * demoNights * 100) / 100;
+    const demoTax = Math.round(roomTotal * 0.05 * 100) / 100;
+    const demoTotal = roomTotal + demoTax;
+
+    const formatPrice = (price) =>
+        Number(price).toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+%>
+
+<div class="sn-checkout-page">
+    <div class="sn-checkout-container">
+
+        <!-- PAGE HEADER -->
+        <header class="sn-checkout-header">
+            <a href="/listings/<%= listing._id %>"
+               class="sn-back-button"
+               aria-label="Go back to property">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+
+            <h1>Confirm and pay</h1>
+        </header>
+
+        <!-- CHECKOUT GRID -->
+        <div class="sn-checkout-grid">
+
+            <!-- LEFT: PAYMENT SECTION -->
+            <main class="sn-payment-column">
+
+                <section class="sn-payment-section">
+                    <div class="sn-payment-heading">
+                        <h2>Proceed to payment</h2>
+                        <p>You’ll be directed to Razorpay to complete your payment.</p>
+                    </div>
+
+                    <div class="sn-payment-divider"></div>
+
+                    <p class="sn-terms-text">
+                        By selecting the button, I agree to the
+                        <a href="#" class="sn-inline-link">booking terms</a>.
+                    </p>
+
+                    <form
+                        action="/listings/<%= listing._id %>/book"
+                        method="POST"
+                        id="sn-checkout-form"
+                    >
+                        <input
+                            type="hidden"
+                            name="booking[checkIn]"
+                            id="sn-hidden-checkin"
+                            value="<%= demoCheckIn %>"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="booking[checkOut]"
+                            id="sn-hidden-checkout"
+                            value="<%= demoCheckOut %>"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="booking[guests]"
+                            id="sn-hidden-guests"
+                            value="<%= demoGuests %>"
+                        >
+
+                        <button type="submit" class="sn-payment-button">
+                            <span>Continue to payment</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+
+                    <p class="sn-payment-note">
+                        <i class="fa-solid fa-lock"></i>
+                        Secure checkout experience
+                    </p>
+                </section>
+
+            </main>
+
+            <!-- RIGHT: BOOKING SUMMARY -->
+            <aside class="sn-summary-column">
+
+                <!-- TIME ALERT -->
+                <div class="sn-booking-alert">
+                    <span class="sn-alert-icon">
+                        <i class="fa-regular fa-clock"></i>
+                    </span>
+
+                    <span>Only 9 hours left to book your dates</span>
+                </div>
+
+                <!-- PROPERTY AND PRICE CARD -->
+                <section class="sn-summary-card">
+
+                    <!-- PROPERTY -->
+                    <div class="sn-property">
+                        <a href="/listings/<%= listing._id %>"
+                           class="sn-property-image-link">
+                            <img
+                                src="<%= listing.image.url %>"
+                                alt="<%= listing.title %>"
+                                class="sn-property-image"
+                            >
+                        </a>
+
+                        <div class="sn-property-info">
+                            <h2>
+                                <%= listing.title %>
+                            </h2>
+
+                            <p class="sn-property-location">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <%= listing.location %>, <%= listing.country %>
+                            </p>
+
+                            <div class="sn-property-rating">
+                                <i class="fa-solid fa-star"></i>
+                                <span>New</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CANCELLATION POLICY -->
+                    <div class="sn-cancellation">
+                        <p>
+                            Partial refund: Get back every night that remains
+                            24 hours after you cancel. No refund of the nights
+                            you've spent or the service fee.
+                            <a href="#" class="sn-inline-link">Full policy</a>
+                        </p>
+                    </div>
+
+                    <!-- DATES -->
+                    <div class="sn-summary-section">
+                        <div class="sn-summary-detail">
+                            <h3>Dates</h3>
+
+                            <p id="sn-display-dates">
+                                30 Oct – 2 Nov 2026
+                            </p>
+
+                            <p class="sn-muted-text">
+                                2:00 pm check-in · 11:00 am check-out
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="sn-change-button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#snDatesModal"
+                        >
+                            Change
+                        </button>
+                    </div>
+
+                    <!-- GUESTS -->
+                    <div class="sn-summary-section">
+                        <div class="sn-summary-detail">
+                            <h3>Guests</h3>
+                            <p id="sn-display-guests">1 adult</p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="sn-change-button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#snGuestsModal"
+                        >
+                            Change
+                        </button>
+                    </div>
+
+                    <!-- PRICE DETAILS -->
+                    <div class="sn-price-section">
+                        <h3>Price details</h3>
+
+                        <div class="sn-price-row">
+                            <span>
+                                <span id="sn-nights"><%= demoNights %></span>
+                                nights × ₹<span id="sn-nightly-price"><%= formatPrice(nightlyPrice) %></span>
+                            </span>
+
+                            <span id="sn-room-total">
+                                ₹<%= formatPrice(roomTotal) %>
+                            </span>
+                        </div>
+
+                        <div class="sn-price-row">
+                            <span>Taxes (5% demo)</span>
+
+                            <span id="sn-tax-total">
+                                ₹<%= formatPrice(demoTax) %>
+                            </span>
+                        </div>
+
+                        <div class="sn-price-divider"></div>
+
+                        <div class="sn-total-row">
+                            <strong>Total <span>INR</span></strong>
+
+                            <strong id="sn-grand-total">
+                                ₹<%= formatPrice(demoTotal) %>
+                            </strong>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="sn-breakdown-button"
+                            id="sn-breakdown-toggle"
+                            aria-expanded="false"
+                        >
+                            <span>Price breakdown</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+
+                        <div class="sn-breakdown-details" id="sn-breakdown" hidden>
+                            <div class="sn-breakdown-row">
+                                <span>Accommodation</span>
+                                <span id="sn-breakdown-room">
+                                    ₹<%= formatPrice(roomTotal) %>
+                                </span>
+                            </div>
+
+                            <div class="sn-breakdown-row">
+                                <span>Estimated taxes</span>
+                                <span id="sn-breakdown-tax">
+                                    ₹<%= formatPrice(demoTax) %>
+                                </span>
+                            </div>
+
+                            <p>
+                                Taxes are illustrative demo values and must
+                                be verified before real bookings.
+                            </p>
+                        </div>
+                    </div>
+
+                </section>
+
+            </aside>
+
+        </div>
+    </div>
+</div>
+
+<!-- DATE MODAL -->
+<div
+    class="modal fade"
+    id="snDatesModal"
+    tabindex="-1"
+    aria-labelledby="snDatesModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content sn-modal-content">
+
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="snDatesModalLabel">
+                    Change your dates
+                </h2>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+
+            <div class="modal-body sn-modal-body">
+                <div class="sn-modal-field">
+                    <label for="sn-checkin">Check-in</label>
+                    <input
+                        type="date"
+                        id="sn-checkin"
+                        class="form-control"
+                        value="<%= demoCheckIn %>"
+                    >
+                </div>
+
+                <div class="sn-modal-field">
+                    <label for="sn-checkout">Check-out</label>
+                    <input
+                        type="date"
+                        id="sn-checkout"
+                        class="form-control"
+                        value="<%= demoCheckOut %>"
+                    >
+                </div>
+
+                <p class="sn-date-error" id="sn-date-error"></p>
+            </div>
+
+            <div class="modal-footer sn-modal-footer">
+                <button
+                    type="button"
+                    class="sn-save-button"
+                    id="sn-save-dates"
+                >
+                    Save dates
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- GUEST MODAL -->
+<div
+    class="modal fade"
+    id="snGuestsModal"
+    tabindex="-1"
+    aria-labelledby="snGuestsModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content sn-modal-content">
+
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="snGuestsModalLabel">
+                    Who's coming?
+                </h2>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+
+            <div class="modal-body sn-modal-body">
+                <div class="sn-guest-control">
+                    <div>
+                        <h3>Adults</h3>
+                        <p>Ages 13 or above</p>
+                    </div>
+
+                    <div class="sn-guest-counter">
+                        <button type="button" id="sn-minus-guest" aria-label="Decrease guests">−</button>
+                        <span id="sn-guest-count">1</span>
+                        <button type="button" id="sn-plus-guest" aria-label="Increase guests">+</button>
+                    </div>
+                </div>
+
+                <p class="sn-guest-note">
+                    Maximum 16 guests in this demo. Actual capacity must
+                    be checked against the property.
+                </p>
+            </div>
+
+
+        </div>
+    </div>
+</div>

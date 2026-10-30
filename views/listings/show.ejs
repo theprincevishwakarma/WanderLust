@@ -46,6 +46,15 @@
     </form>
   </div>
   <% } %>
+  <% if(!currUser || !(currUser._id.equals(listing.owner._id))) {%>
+    <div class="btns mb-3 col-10 offset-1">
+      <a
+        href="/book/stays/<%= listing._id %>"
+        class="btn btn-dark col-1 edit-btn btn-red"
+        >Reserve</a
+      >
+    </div>
+  <% } %>
   <div class="col-10 offset-1">
     <% if(currUser && !listing.owner.equals(currUser._id)){ %>
     <hr/>

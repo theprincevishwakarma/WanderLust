@@ -89,3 +89,14 @@ module.exports.isListingOwner = async (req, res, next) => {
   }
   next();
 };
+
+module.exports.isNotOwner = async (req, res, next) => {
+  let { id } = req.params;
+  let listing = await Listing.findById(id);
+
+  if (listing.owner.equals(req.user._id)) {
+    req.flash("error", "You cannot book your own StayNest!");
+    return res.redirect(`/listings/${id}`);
+  }
+  next();
+};
