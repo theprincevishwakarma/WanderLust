@@ -82,7 +82,7 @@
           <div class="card-img-overlay"></div>
           <div class="card-body">
             <p class="card-text title ms-3"><b><%= listing.title %></b></p>
-            <p class="card-text title ms-3">&#8377; <%= listing.price.toLocaleString("en-IN") %></p>
+            <p class="card-text title ms-3 price">&#8377; <span class="listing-price" data-price="<%=listing.price %>"><%= listing.price.toLocaleString("en-IN") %></span><small class="gst-label text-muted"></small></p>
           </div>
         </div>
       </a>

@@ -56,3 +56,28 @@ if (searchBox) {
 
   typeEffect();
 }
+
+const gstToggle = document.getElementById("switchCheckReverse");
+
+gstToggle.addEventListener("change", function () {
+  const prices = document.querySelectorAll(".listing-price");
+
+  prices.forEach((priceElement) => {
+    const originalPrice = Number(priceElement.dataset.price);
+    const gstLabel = priceElement.parentElement.querySelector(".gst-label");
+
+    if (this.checked) {
+      // Add 18% GST
+      const priceWithGST = originalPrice * 1.18;
+
+      priceElement.textContent = priceWithGST.toLocaleString("en-IN");
+
+      gstLabel.textContent = "(incl. 18% GST)";
+    } else {
+      // Show original price
+      priceElement.textContent = originalPrice.toLocaleString("en-IN");
+
+      gstLabel.textContent = "";
+    }
+  });
+});

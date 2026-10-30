@@ -271,6 +271,36 @@ select:focus {
   background-color: #ef2755 !important;
 }
 
+/* filters */
+#switchCheckReverse {
+  cursor: pointer;
+  border: 1px solid #ef2755;
+  background-color: #fff;
+  box-shadow: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+#switchCheckReverse:checked {
+  background-color: #ef2755;
+  border-color: #ef2755;
+}
+
+#switchCheckReverse:focus {
+  box-shadow: 0 0 0 0.2rem rgba(239, 39, 85, 0.2);
+  border-color: #ef2755;
+}
+/* Switch ka gola (knob) */
+#switchCheckReverse {
+  --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ef2755'/%3e%3c/svg%3e");
+}
+
+/* Switch ON hone par bhi gole ka color */
+#switchCheckReverse:checked {
+  --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ffffff'/%3e%3c/svg%3e");
+}
+
 /* Footer */
 footer {
   color: #222222be;
