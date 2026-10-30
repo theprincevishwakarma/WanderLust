@@ -35,7 +35,18 @@ router.get("/:username/edit", isLoggedIn, userController.renderEditForm);
 router.get(
   "/:username/newpassword",
   isLoggedIn,
-  userController.renderChangePasswordForm,
+  wrapAasync(userController.renderChangePasswordForm),
+);
+
+router.get(
+  "/:username/listings",
+  isLoggedIn,
+  wrapAasync(userController.renderAllListings),
+);
+router.get(
+  "/:username/bookings",
+  isLoggedIn,
+  wrapAasync(userController.renderAllBookings),
 );
 
 module.exports = router;

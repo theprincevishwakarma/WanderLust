@@ -69,6 +69,10 @@ module.exports.createListing = async (req, res) => {
   newListing.image = { url, filename };
   newListing.geometry = response.body.features[0].geometry;
   await newListing.save();
+
+  req.user.listings += 1;
+  await req.user.save();
+
   req.flash("success", "New StayNest Created!");
   res.redirect("/listings");
 };
@@ -119,6 +123,10 @@ module.exports.destroyListing = async (req, res) => {
   let { id } = req.params;
   let listing = await Listing.findByIdAndDelete(id);
   await cloudinary.uploader.destroy(listing.image.filename);
+
+  req.user.listings -= 1;
+  await req.user.save();
+
   req.flash("success", "StayNest Deleted!");
   res.redirect("/listings");
 };

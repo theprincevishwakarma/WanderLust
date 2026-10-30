@@ -73,12 +73,13 @@ module.exports.updateUser = async (req, res) => {
     return res.redirect(`/${user.username}/edit`);
   }
 
-  user.name.firstName = req.body.user.name.firstName;
-  user.name.lastName = req.body.user.name.lastName;
-  user.email = req.body.user.email;
-  user.location = req.body.user.location;
-  user.phoneNo = req.body.user.phoneNo;
-  user.username = req.body.user.username;
+  user = {
+    ...req.body.user,
+    name: {
+      firstName: req.body.user.name.firstName,
+      lastName: req.body.user.name.lastName,
+    },
+  };
 
   await user.save();
 
@@ -110,4 +111,13 @@ module.exports.updatePassword = async (req, res) => {
     req.flash("error", "Old password is incorrect!");
     res.redirect(`/${req.user.username}/newpassword`);
   }
+};
+
+module.exports.renderAllListings = async (req, res) => {
+  const listings = await Listing.find({ owner: req.user._id });
+  res.render("./users/listings", { listings, showSearch: false });
+};
+
+module.exports.renderAllBookings = async (req, res) => {
+  res.send("all Bookings");
 };

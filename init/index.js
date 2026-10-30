@@ -29,6 +29,8 @@ async function main() {
 }
 
 const initDB = async () => {
+  const userId = "6ac9b50c2b95698c33a39f56";
+
   let listings = await Listing.find({});
   for (let listing of listings) {
     if (listing.image.filename.startsWith("StayNest_Listings/")) {
@@ -38,6 +40,11 @@ const initDB = async () => {
 
   await Listing.deleteMany({});
   await Review.deleteMany({});
+
+  const user = await User.findById(userId);
+  user.listings = 0;
+  user.bookings = 0;
+
   initData.data = await Promise.all(
     initData.data.map(async (obj) => {
       const response = await geocodingClient
@@ -47,15 +54,20 @@ const initDB = async () => {
         })
         .send();
 
+      user.listings += 1;
+
       return {
         ...obj,
         category: "Demo",
-        owner: "6ac9b50c2b95698c33a39f56",
+        owner: userId,
         geometry: response.body.features[0].geometry,
       };
     }),
   );
   await Listing.insertMany(initData.data);
+
+  await user.save();
+
   console.log("data was initialized");
 };
 

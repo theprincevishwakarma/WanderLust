@@ -1,3 +1,4 @@
+const { required } = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -30,6 +31,14 @@ const userSchema = new Schema({
     type: String,
     required: true,
     trim: true,
+  },
+  listings: {
+    type: Number,
+    default: 0,
+  },
+  bookings: {
+    type: Number,
+    default: 0,
   },
   createdAt: {
     type: Date,
