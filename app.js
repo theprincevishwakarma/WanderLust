@@ -21,8 +21,8 @@ const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
 const bookingRouter = require("./routes/booking");
 
-const dbUrl = "mongodb://127.0.0.1:27017/wanderlust";
-// const dbUrl = process.env.ATLUSDB_URL;
+// const dbUrl = "mongodb://127.0.0.1:27017/wanderlust";
+const dbUrl = process.env.ATLUSDB_URL;
 
 main()
   .then(() => {
@@ -83,6 +83,14 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   res.locals.currUser = req.user;
   next();
+});
+
+app.get("/privacy", (req, res) => {
+  res.render("privacy");
+});
+
+app.get("/terms", (req, res) => {
+  res.render("terms");
 });
 
 app.use("/book/stays/:id", bookingRouter);
