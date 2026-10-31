@@ -73,13 +73,13 @@ module.exports.updateUser = async (req, res) => {
     return res.redirect(`/${user.username}/edit`);
   }
 
-  user = {
+  user.set({
     ...req.body.user,
     name: {
       firstName: req.body.user.name.firstName,
       lastName: req.body.user.name.lastName,
     },
-  };
+  });
 
   await user.save();
 
