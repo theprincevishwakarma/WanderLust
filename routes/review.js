@@ -7,7 +7,7 @@ const {
   isLoggedIn,
   isReviewAuthor,
   isListingOwner,
-} = require("../middleware");
+} = require("../middlewares");
 
 const reviewController = require("../controllers/reviews");
 

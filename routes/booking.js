@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync");
 
-const { isLoggedIn, isNotOwner } = require("../middleware");
+const { isLoggedIn, isNotOwner } = require("../middlewares");
 
 const listingController = require("../controllers/bookings");
 const { render } = require("ejs");
