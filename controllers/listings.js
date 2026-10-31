@@ -1,5 +1,6 @@
 const { cloudinary } = require("../cloudConfig");
 const Listing = require("../models/listing");
+const Booking = require("../models/booking");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
@@ -33,12 +34,6 @@ module.exports.index = async (req, res) => {
   });
 };
 
-// home search for destination
-module.exports.renderSearchListing = async (req, res) => {
-  let query = req.query;
-  res.send(query);
-};
-
 module.exports.renderNewForm = (req, res) => {
   res.render("./listings/new", { showSearch: false });
 };
@@ -52,7 +47,10 @@ module.exports.showListing = async (req, res) => {
     req.flash("error", "StayNest you requested for doesn't exist!");
     return res.redirect("/listings");
   }
-  res.render("./listings/show", { listing });
+  const booking = Boolean(
+    await Booking.exists({ listingId: listing._id, userId: req.user._id }),
+  );
+  res.render("./listings/show", { listing, booking });
 };
 
 module.exports.createListing = async (req, res) => {
