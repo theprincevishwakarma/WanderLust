@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://staynest.bitofprince.site/sitemap.xml

@@ -21,6 +21,8 @@ const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user");
 const bookingRouter = require("./routes/booking");
 
+const Listing = require("./models/listing");
+
 // const dbUrl = "mongodb://127.0.0.1:27017/wanderlust";
 const dbUrl = process.env.ATLUSDB_URL;
 
@@ -82,6 +84,8 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   res.locals.currUser = req.user;
+  // SEO: Canonical URL
+  res.locals.canonicalUrl = `https://staynest.bitofprince.site${req.path}`;
   next();
 });
 
@@ -94,6 +98,48 @@ app.get("/terms", (req, res) => {
 });
 
 app.use("/book", bookingRouter);
+
+// Dynamic XML Sitemap
+app.get("/sitemap.xml", async (req, res) => {
+  try {
+    const baseUrl = "https://staynest.bitofprince.site";
+
+    const listings = await Listing.find({}, "_id");
+
+    const staticUrls = [
+      `${baseUrl}/`,
+      `${baseUrl}/listings`,
+      `${baseUrl}/privacy`,
+      `${baseUrl}/terms`,
+    ];
+
+    const listingUrls = listings.map(
+      (listing) =>
+        `${baseUrl}/listings/${encodeURIComponent(listing._id.toString())}`,
+    );
+
+    const allUrls = [...staticUrls, ...listingUrls];
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${allUrls
+  .map(
+    (url) => `  <url>
+    <loc>${url}</loc>
+  </url>`,
+  )
+  .join("\n")}
+</urlset>`;
+
+    res.set("Content-Type", "application/xml");
+    res.set("Cache-Control", "public, max-age=300");
+    res.status(200).send(xml);
+  } catch (error) {
+    console.error("Sitemap generation error:", error);
+    res.status(500).send("Unable to generate sitemap");
+  }
+});
+
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);

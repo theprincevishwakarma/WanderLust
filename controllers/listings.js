@@ -31,6 +31,9 @@ module.exports.index = async (req, res) => {
   res.render("listings/index.ejs", {
     allListings,
     search,
+    seoTitle: "Explore Stays & Hotels | StayNest",
+    seoDescription:
+      "Explore amazing stays, hotels, villas and unique accommodations. Find your perfect stay with StayNest.",
   });
 };
 
@@ -47,10 +50,24 @@ module.exports.showListing = async (req, res) => {
     req.flash("error", "StayNest you requested for doesn't exist!");
     return res.redirect("/listings");
   }
-  const booking = Boolean(
-    await Booking.exists({ listingId: listing._id, userId: req.user._id }),
-  );
-  res.render("./listings/show", { listing, booking });
+  const booking = req.user
+    ? Boolean(
+        await Booking.exists({
+          listingId: listing._id,
+          userId: req.user._id,
+        }),
+      )
+    : false;
+  res.render("./listings/show", {
+    listing,
+    booking,
+    seoTitle: `${listing.title} | StayNest`,
+
+    seoDescription: `${
+      listing.description?.replace(/<[^>]*>/g, "").slice(0, 150) ||
+      `Discover ${listing.title} at ${listing.location}, ${listing.country}. Book your perfect stay with StayNest.`
+    }`,
+  });
 };
 
 module.exports.createListing = async (req, res) => {
