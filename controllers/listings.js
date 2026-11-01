@@ -1,4 +1,5 @@
 const { cloudinary } = require("../cloudConfig");
+const mongoose = require("mongoose");
 const Listing = require("../models/listing");
 const Booking = require("../models/booking");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
