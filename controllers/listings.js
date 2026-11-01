@@ -2,6 +2,7 @@ const { cloudinary } = require("../cloudConfig");
 const Listing = require("../models/listing");
 const Booking = require("../models/booking");
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+const ExpressError = require("../utils/ExpressError");
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
@@ -43,12 +44,19 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.showListing = async (req, res) => {
   let { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return next(
+      new ExpressError(404, "StayNest you requested for doesn't exist!"),
+    );
+  }
   const listing = await Listing.findById(id)
     .populate({ path: "reviews", populate: { path: "author" } })
     .populate("owner");
   if (!listing) {
     req.flash("error", "StayNest you requested for doesn't exist!");
-    return res.redirect("/listings");
+    return next(
+      new ExpressError(404, "StayNest you requested for doesn't exist!"),
+    );
   }
   const booking = req.user
     ? Boolean(
@@ -58,13 +66,19 @@ module.exports.showListing = async (req, res) => {
         }),
       )
     : false;
+
+  const plainDescription = listing.description
+    ?.replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
   res.render("./listings/show", {
     listing,
     booking,
-    seoTitle: `${listing.title} | StayNest`,
+    seoTitle: `${listing.title} in ${listing.location} | StayNest`,
 
     seoDescription: `${
-      listing.description?.replace(/<[^>]*>/g, "").slice(0, 150) ||
+      plainDescription?.slice(0, 150) ||
       `Discover ${listing.title} at ${listing.location}, ${listing.country}. Book your perfect stay with StayNest.`
     }`,
   });

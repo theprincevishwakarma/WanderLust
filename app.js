@@ -104,7 +104,19 @@ app.get("/sitemap.xml", async (req, res) => {
   try {
     const baseUrl = "https://staynest.bitofprince.site";
 
-    const listings = await Listing.find({}, "_id");
+    const listings = await Listing.find({}, "_id updatedAt");
+
+    const escapeXml = (value) =>
+      String(value).replace(/[<>&'"]/g, (char) => {
+        const entities = {
+          "<": "&lt;",
+          ">": "&gt;",
+          "&": "&amp;",
+          "'": "&apos;",
+          '"': "&quot;",
+        };
+        return entities[char];
+      });
 
     const staticUrls = [
       `${baseUrl}/`,
@@ -113,25 +125,33 @@ app.get("/sitemap.xml", async (req, res) => {
       `${baseUrl}/terms`,
     ];
 
-    const listingUrls = listings.map(
-      (listing) =>
-        `${baseUrl}/listings/${encodeURIComponent(listing._id.toString())}`,
+    const staticEntries = staticUrls.map(
+      (url) => `
+      <url>
+        <loc>${escapeXml(url)}</loc>
+      </url>`,
     );
 
-    const allUrls = [...staticUrls, ...listingUrls];
+    const listingEntries = listings.map((listing) => {
+      const url = `${baseUrl}/listings/${listing._id}`;
+
+      const lastmod = listing.updatedAt
+        ? `<lastmod>${new Date(listing.updatedAt).toISOString()}</lastmod>`
+        : "";
+
+      return `
+      <url>
+        <loc>${escapeXml(url)}</loc>
+        ${lastmod}
+      </url>`;
+    });
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${allUrls
-  .map(
-    (url) => `  <url>
-    <loc>${url}</loc>
-  </url>`,
-  )
-  .join("\n")}
+${[...staticEntries, ...listingEntries].join("\n")}
 </urlset>`;
 
-    res.set("Content-Type", "application/xml");
+    res.set("Content-Type", "application/xml; charset=utf-8");
     res.set("Cache-Control", "public, max-age=300");
     res.status(200).send(xml);
   } catch (error) {
