@@ -1,16 +1,32 @@
 <% layout("/layouts/boilerplate") %>
 
-    <% const demoCheckIn="2026-10-30" ; const demoCheckOut="2026-11-02" ; const demoGuests=1; const
-        nightlyPrice=Number(listing.price) || 0; const demoNights=3; const roomTotal=Math.round(nightlyPrice *
-        demoNights * 100) / 100; const demoTax=Math.round(roomTotal * 0.05 * 100) / 100; const demoTotal=roomTotal +
-        demoTax; const formatPrice=(price)=>
-        Number(price).toLocaleString("en-IN", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
+    <% const pad=(n)=> String(n).padStart(2, "0");
+        const toLocalISO = (dt) => `${dt.getFullYear()}-${pad(dt.getMonth() + 1)}-${pad(dt.getDate())}`;
+        const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        const fmtDay = (dt) => pad(dt.getDate()) + " " + MONTHS[dt.getMonth()];
+        const fmtFull = (dt) => fmtDay(dt) + " " + dt.getFullYear();
+
+        const currDate = new Date();
+        const leftHours = 24 - currDate.getHours();
+
+        const d = new Date();
+        d.setDate(d.getDate() + 1);
+
+        const demoCheckIn = toLocalISO(currDate);
+        const demoCheckOut = toLocalISO(d);
+        const demoGuests = 1;
+        const demoNights = 1;
+        const nightlyPrice = Number(listing.price) || 0;
+        const roomTotal = Math.round(nightlyPrice * demoNights * 100) / 100;
+        const TAX_RATE = 0.18;
+        const demoTax = Math.round(roomTotal * TAX_RATE * 100) / 100;
+        const demoTotal = Math.round((roomTotal + demoTax) * 100) / 100;
+        const formatPrice = (p) => Number(p).toLocaleString("en-IN", {
+        minimumFractionDigits: 2, maximumFractionDigits: 2
         });
         %>
 
-        <div class="sn-checkout-page title">
+        <div class=" sn-checkout-page title">
             <div class="sn-checkout-container">
 
                 <!-- PAGE HEADER -->
@@ -39,7 +55,7 @@
 
                             <p class="sn-terms-text">
                                 By selecting the button, I agree to the
-                                <a href="#" class="sn-inline-link">booking terms</a>.
+                                <a href="/terms" class="sn-inline-link">booking terms</a>.
                             </p>
 
                             <form action="/book/stays/<%= listing._id %>" method="POST" id="sn-checkout-form">
@@ -57,7 +73,8 @@
                                 >
 
                                 <button type="submit" class="sn-payment-button">
-                                    <span class="title" style="color:white;">Continue to payment</span>
+                                    <span class="title" style="color:rgb(255, 255, 255);">Continue to
+                                        payment</span>
                                     <i class="fa-solid fa-arrow-right"></i>
                                 </button>
                             </form>
@@ -79,7 +96,7 @@
                                 <i class="fa-regular fa-clock"></i>
                             </span>
 
-                            <span>Only 9 hours left to book your dates</span>
+                            <span>Only <%= leftHours %> hours left to book your dates</span>
                         </div>
 
                         <!-- PROPERTY AND PRICE CARD -->
@@ -115,7 +132,7 @@
                                     Partial refund: Get back every night that remains
                                     24 hours after you cancel. No refund of the nights
                                     you've spent or the service fee.
-                                    <a href="#" class="sn-inline-link">Full policy</a>
+                                    <a href="/terms" class="sn-inline-link">Full policy</a>
                                 </p>
                             </div>
 
@@ -125,10 +142,10 @@
                                     <h3>Dates</h3>
 
                                     <p id="sn-display-dates">
-                                        30 Oct – 2 Nov 2026
+                                        <%= fmtDay(currDate) %> – <%= fmtFull(d) %>
                                     </p>
 
-                                    <p class="sn-muted-text">
+                                    <p class=" sn-muted-text">
                                         2:00 pm check-in · 11:00 am check-out
                                     </p>
                                 </div>
@@ -161,18 +178,23 @@
                                         <span id="sn-nights">
                                             <%= demoNights %>
                                         </span>
-                                        nights × ₹<span id="sn-nightly-price">
+                                        <span id="sn-nights-label">
+                                            <%= demoNights===1 ? "night" : "nights" %>
+                                        </span>
+                                        × ₹<span id="sn-nightly-price">
                                             <%= formatPrice(nightlyPrice) %>
                                         </span>
                                     </span>
+                                    <span id="sn-room-total">₹<%= formatPrice(roomTotal) %></span>
+                                </div>
 
-                                    <span id="sn-room-total">
-                                        ₹<%= formatPrice(roomTotal) %>
-                                    </span>
+                                <div class="sn-price-row" id="sn-extra-row" hidden>
+                                    <span id="sn-extra-label">Extra guests</span>
+                                    <span id="sn-extra-total">₹0.00</span>
                                 </div>
 
                                 <div class="sn-price-row">
-                                    <span>Taxes (5% demo)</span>
+                                    <span>Taxes (18% demo)</span>
 
                                     <span id="sn-tax-total">
                                         ₹<%= formatPrice(demoTax) %>
@@ -195,7 +217,7 @@
                                     <i class="fa-solid fa-chevron-down"></i>
                                 </button>
 
-                                <div class="sn-breakdown-details" id="sn-breakdown" hidden>
+                                <div class="sn-breakdown-details" id="sn-breakdown">
                                     <div class="sn-breakdown-row">
                                         <span>Accommodation</span>
                                         <span id="sn-breakdown-room">
@@ -241,12 +263,14 @@
                     <div class="modal-body sn-modal-body">
                         <div class="sn-modal-field">
                             <label for="sn-checkin">Check-in</label>
-                            <input type="date" id="sn-checkin" class="form-control" value="<%= demoCheckIn %>">
+                            <input type="date" id="sn-checkin" class="form-control" min="<%= demoCheckIn %>"
+                                value="<%= demoCheckIn %>">
                         </div>
 
                         <div class="sn-modal-field">
                             <label for="sn-checkout">Check-out</label>
-                            <input type="date" id="sn-checkout" class="form-control" value="<%= demoCheckOut %>">
+                            <input type="date" id="sn-checkout" class="form-control" min="<%= demoCheckOut %>"
+                                value="<%= demoCheckOut %>">
                         </div>
 
                         <p class="sn-date-error" id="sn-date-error"></p>
@@ -269,10 +293,7 @@
                 <div class="modal-content sn-modal-content">
 
                     <div class="modal-header">
-                        <h2 class="modal-title fs-5" id="snGuestsModalLabel">
-                            Who's coming?
-                        </h2>
-
+                        <h2 class="modal-title fs-5" id="snGuestsModalLabel">Who's coming?</h2>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -282,21 +303,148 @@
                                 <h3>Adults</h3>
                                 <p>Ages 13 or above</p>
                             </div>
-
                             <div class="sn-guest-counter">
                                 <button type="button" id="sn-minus-guest" aria-label="Decrease guests">−</button>
                                 <span id="sn-guest-count">1</span>
                                 <button type="button" id="sn-plus-guest" aria-label="Increase guests">+</button>
                             </div>
                         </div>
-
                         <p class="sn-guest-note">
-                            Maximum 16 guests in this demo. Actual capacity must
-                            be checked against the property.
+                            Maximum 16 guests in this demo. Actual capacity must be checked against the property.
                         </p>
                     </div>
 
+                    <div class="modal-footer sn-modal-footer">
+                        <button type="button" class="sn-save-button" data-bs-dismiss="modal">Done</button>
+                    </div>
 
                 </div>
             </div>
         </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                /* ---------- CONSTANTS + HELPERS ---------- */
+                const $ = (id) => document.getElementById(id);
+                const NIGHTLY = Number("<%= nightlyPrice %>") || 0;
+                const TAX_RATE = Number("<%= TAX_RATE %>");
+                const MAX_GUESTS = 16;
+                const BASE_GUESTS = 2;     // guests included in the nightly price
+                const EXTRA_FEE = NIGHTLY;   // ₹ per extra guest per night
+                const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+                const pad = (n) => String(n).padStart(2, "0");
+                const toISO = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+                const parse = (v) => new Date(v + "T00:00:00");
+                const fmtDay = (d) => pad(d.getDate()) + " " + MONTHS[d.getMonth()];
+                const fmtFull = (d) => fmtDay(d) + " " + d.getFullYear();
+                const money = (n) => "₹" + n.toLocaleString("en-IN", {
+                    minimumFractionDigits: 2, maximumFractionDigits: 2
+                });
+
+                /* ---------- STATE ---------- */
+                let guests = 1;
+
+                /* ---------- SHARED PRICE CALCULATION ---------- */
+                function recalc() {
+                    const inDate = parse($("sn-hidden-checkin").value);
+                    const outDate = parse($("sn-hidden-checkout").value);
+                    const nights = Math.max(1, Math.round((outDate - inDate) / 86400000));
+
+                    const extraGuests = Math.max(0, guests - BASE_GUESTS);
+                    const extra = extraGuests * EXTRA_FEE * nights;           // extra-guest fee
+                    const room = Math.round(NIGHTLY * nights * 100) / 100;   // base stay
+                    const tax = Math.round((room + extra) * TAX_RATE * 100) / 100;
+                    const total = Math.round((room + extra + tax) * 100) / 100;
+
+                    $("sn-nights").textContent = nights;
+                    $("sn-nights-label").textContent = nights === 1 ? "night" : "nights";
+                    $("sn-room-total").textContent = money(room);
+
+                    // Extra guests row: only visible when there are extra guests
+                    const extraRow = $("sn-extra-row");
+                    extraRow.hidden = extraGuests === 0;
+                    $("sn-extra-label").textContent =
+                        `Extra guests (${extraGuests} × ₹${EXTRA_FEE} × ${nights} ${nights === 1 ? "night" : "nights"})`;
+                    $("sn-extra-total").textContent = money(extra);
+
+                    $("sn-tax-total").textContent = money(tax);
+                    $("sn-grand-total").textContent = money(total);
+                    $("sn-breakdown-room").textContent = money(room + extra);
+                    $("sn-breakdown-tax").textContent = money(tax);
+                    $("sn-hidden-total-price").value = total;
+                }
+
+                /* ---------- DATES ---------- */
+                const checkin = $("sn-checkin");
+                const checkout = $("sn-checkout");
+                const dateModalEl = $("snDatesModal");
+
+                function syncCheckout() {
+                    if (!checkin.value) return;
+                    const next = parse(checkin.value);
+                    next.setDate(next.getDate() + 1);
+                    const minOut = toISO(next);
+                    checkout.min = minOut;
+                    if (!checkout.value || checkout.value < minOut) checkout.value = minOut;
+                }
+                checkin.addEventListener("input", syncCheckout);
+                checkin.addEventListener("change", syncCheckout);
+                checkout.addEventListener("change", () => {
+                    if (checkout.value && checkout.min && checkout.value < checkout.min) {
+                        checkout.value = checkout.min;
+                    }
+                });
+                syncCheckout();
+
+                dateModalEl.addEventListener("hidden.bs.modal", () => {
+                    checkin.value = $("sn-hidden-checkin").value;
+                    checkout.value = $("sn-hidden-checkout").value;
+                    $("sn-date-error").textContent = "";
+                    syncCheckout();
+                });
+
+                $("sn-save-dates").addEventListener("click", () => {
+                    const inVal = checkin.value, outVal = checkout.value;
+
+                    if (!inVal || !outVal || inVal < toISO(new Date()) || outVal <= inVal) {
+                        $("sn-date-error").textContent = "Please choose valid dates.";
+                        return;
+                    }
+                    $("sn-date-error").textContent = "";
+
+                    const inDate = parse(inVal), outDate = parse(outVal);
+                    const sameYear = inDate.getFullYear() === outDate.getFullYear();
+                    $("sn-display-dates").textContent =
+                        (sameYear ? fmtDay(inDate) : fmtFull(inDate)) + " – " + fmtFull(outDate);
+
+                    $("sn-hidden-checkin").value = inVal;
+                    $("sn-hidden-checkout").value = outVal;
+
+                    recalc();
+                    bootstrap.Modal.getInstance(dateModalEl)?.hide();
+                });
+
+                /* ---------- GUESTS ---------- */
+                function renderGuests() {
+                    $("sn-guest-count").textContent = guests;
+                    $("sn-display-guests").textContent = guests + (guests === 1 ? " adult" : " adults");
+                    $("sn-hidden-guests").value = guests;
+                    $("sn-minus-guest").disabled = guests <= 1;
+                    $("sn-plus-guest").disabled = guests >= MAX_GUESTS;
+                    recalc();
+                }
+                $("sn-minus-guest").addEventListener("click", () => { if (guests > 1) { guests--; renderGuests(); } });
+                $("sn-plus-guest").addEventListener("click", () => { if (guests < MAX_GUESTS) { guests++; renderGuests(); } });
+                renderGuests();
+
+                /* ---------- PRICE BREAKDOWN TOGGLE ---------- */
+                const toggle = $("sn-breakdown-toggle");
+                const panel = $("sn-breakdown");
+                toggle.addEventListener("click", () => {
+                    const isOpen = panel.classList.toggle("is-open");
+                    toggle.classList.toggle("is-open", isOpen);
+                    toggle.setAttribute("aria-expanded", String(isOpen));
+                });
+            });
+        </script>

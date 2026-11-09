@@ -433,6 +433,9 @@
   font-size: 0.79rem;
   line-height: 1.65;
 }
+.sn-price-row[hidden] {
+  display: none;
+}
 
 .sn-price-row > span:first-child {
   flex: 1;
@@ -502,15 +505,25 @@
 }
 
 .sn-breakdown-details {
+  display: none;
   margin-top: 15px;
   padding-top: 13px;
   border-top: 1px dashed #e3e3e3;
 }
 
-.sn-breakdown-details[hidden] {
-  display: none;
+.sn-breakdown-details.is-open {
+  display: block;
 }
 
+.sn-breakdown-button i {
+  font-size: 0.65rem;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.sn-breakdown-button.is-open i {
+  transform: rotate(180deg);
+}
 .sn-breakdown-row {
   display: flex;
   justify-content: space-between;
@@ -593,20 +606,16 @@
 }
 
 .sn-save-button {
-  width: 100%;
-  padding: 13px 18px;
+  background: #e61e4d;
+  color: #fff;
   border: none;
-  border-radius: 10px;
-  background: var(--sn-primary);
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 0.84rem;
-  font-weight: 800;
-  transition: background 0.2s ease;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
 }
-
 .sn-save-button:hover {
-  background: var(--sn-primary-dark);
+  background: #c9163f;
 }
 
 /* Guest counter */

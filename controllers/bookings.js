@@ -4,7 +4,13 @@ const Booking = require("../models/booking");
 module.exports.renderBookingPage = async (req, res) => {
   //   res.send("booking pending");
   const listing = await Listing.findById(req.params.id);
-  res.render("./bookings/index", { listing });
+  let originalImageUrl = listing.image.url;
+  originalImageUrl = originalImageUrl.replace("/upload", "/upload/q_40");
+  res.render("./bookings/index", {
+    listing,
+    originalImageUrl,
+    showSearch: false,
+  });
 };
 
 module.exports.bookListing = async (req, res) => {
