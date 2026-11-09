@@ -6,7 +6,7 @@ const { isLoggedIn, isOwner, validateListing } = require("../middlewares");
 const listingController = require("../controllers/listings");
 
 const multer = require("multer");
-const { storage } = require("../cloudConfig");
+const { storage } = require("../config/cloudConfig");
 const upload = multer({ storage });
 
 router
