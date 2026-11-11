@@ -15,7 +15,7 @@ router.get(
 
 router
   .route("/stays/:id")
-  .get(isLoggedIn, isNotOwner, wrapAsync(listingController.renderBookingPage))
+  .get(isNotOwner, wrapAsync(listingController.renderBookingPage))
   .post(isLoggedIn, isNotOwner, wrapAsync(listingController.bookListing));
 
 module.exports = router;

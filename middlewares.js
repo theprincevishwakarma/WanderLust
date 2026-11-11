@@ -78,8 +78,7 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 
 // StayNest owner does'nt have permission to create review on there own StayNest
 module.exports.isListingOwner = async (req, res, next) => {
-  let { id } = req.params;
-  let listing = await Listing.findById(id);
+  let listing = await Listing.findById(req.params.id);
   if (listing.owner.equals(req.user._id)) {
     req.flash(
       "error",
@@ -91,12 +90,14 @@ module.exports.isListingOwner = async (req, res, next) => {
 };
 
 module.exports.isNotOwner = async (req, res, next) => {
-  let { id } = req.params;
-  let listing = await Listing.findById(id);
+  if (req.user) {
+    let { id } = req.params;
+    let listing = await Listing.findById(id);
 
-  if (listing.owner.equals(req.user._id)) {
-    req.flash("error", "You cannot book your own StayNest!");
-    return res.redirect(`/listings/${id}`);
+    if (listing.owner.equals(req.user._id)) {
+      req.flash("error", "You cannot book your own StayNest!");
+      return res.redirect(`/listings/${id}`);
+    }
   }
   next();
 };
