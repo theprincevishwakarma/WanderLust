@@ -97,8 +97,6 @@ app.get("/terms", (req, res) => {
   res.render("terms");
 });
 
-app.use("/book", bookingRouter);
-
 // Dynamic XML Sitemap
 app.get("/sitemap.xml", async (req, res) => {
   try {
@@ -161,6 +159,7 @@ ${[...staticEntries, ...listingEntries].join("\n")}
 });
 
 app.use("/listings", listingRouter);
+app.use("/book/stays", bookingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 

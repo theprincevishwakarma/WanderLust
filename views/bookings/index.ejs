@@ -58,7 +58,7 @@
                                 <a href="/terms" class="sn-inline-link">booking terms</a>.
                             </p>
 
-                            <form action="/book/stays/<%= listing._id %>" method="POST" id="sn-checkout-form">
+                            <form action="/api/payment/<%= listing._id %>" method="POST" id="sn-checkout-form">
                                 <input type="hidden" name="booking[checkIn]" id="sn-hidden-checkin"
                                     value="<%= demoCheckIn %>">
 

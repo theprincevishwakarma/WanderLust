@@ -7,15 +7,9 @@ const { isLoggedIn, isNotOwner } = require("../middlewares");
 const listingController = require("../controllers/bookings");
 const { render } = require("ejs");
 
-router.get(
-  "/stays",
-  isLoggedIn,
-  wrapAsync(listingController.renderAllBookingStays),
-);
+router.get("/", isLoggedIn, wrapAsync(listingController.renderAllBookingStays));
 
-router
-  .route("/stays/:id")
-  .get(isNotOwner, wrapAsync(listingController.renderBookingPage))
-  .post(isLoggedIn, isNotOwner, wrapAsync(listingController.bookListing));
+router.get("/:id", isNotOwner, wrapAsync(listingController.renderBookingPage));
+// .post(isLoggedIn, isNotOwner, wrapAsync(listingController.bookListing));
 
 module.exports = router;
