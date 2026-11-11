@@ -1,28 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const wrapAasync = require("../utils/wrapAsync");
-const { isLoggedIn } = require("../middlewares");
 
 const userController = require("../controllers/users");
 
 router
   .route("/")
-  .get(isLoggedIn, userController.renderUserProfile)
-  .put(isLoggedIn, wrapAasync(userController.updateUser))
-  .patch(isLoggedIn, wrapAasync(userController.updatePassword))
-  .delete(isLoggedIn, wrapAasync(userController.destroyUser));
+  .get(userController.renderUserProfile)
+  .put(wrapAasync(userController.updateUser))
+  .patch(wrapAasync(userController.updatePassword))
+  .delete(wrapAasync(userController.destroyUser));
 
-router.get("/edit", isLoggedIn, userController.renderEditForm);
-router.get(
-  "/newpassword",
-  isLoggedIn,
-  wrapAasync(userController.renderChangePasswordForm),
-);
+router.get("/edit", userController.renderEditForm);
+router.get("/newpassword", wrapAasync(userController.renderChangePasswordForm));
 
-router.get(
-  "/listings",
-  isLoggedIn,
-  wrapAasync(userController.renderAllListings),
-);
+router.get("/listings", wrapAasync(userController.renderAllListings));
 
 module.exports = router;

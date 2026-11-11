@@ -21,8 +21,8 @@ module.exports.renderSitemap = async (req, res) => {
     const staticUrls = [
       `${baseUrl}/`,
       `${baseUrl}/listings`,
-      `${baseUrl}/privacy`,
-      `${baseUrl}/terms`,
+      `${baseUrl}/staynest/privacy`,
+      `${baseUrl}/staynest/terms`,
     ];
 
     const staticEntries = staticUrls.map(

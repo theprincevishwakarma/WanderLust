@@ -8,8 +8,6 @@ module.exports.renderUserProfile = (req, res) => {
 
 module.exports.destroyUser = async (req, res) => {
   let { currUser } = res.locals;
-  await Listing.deleteMany({ owner: currUser._id });
-  await Review.deleteMany({ author: currUser._id });
   await User.findByIdAndDelete(currUser._id);
   res.redirect("/listings");
 };
@@ -18,7 +16,7 @@ module.exports.renderEditForm = (req, res) => {
   res.render("./users/edit");
 };
 
-module.exports.updateUser = async (req, res) => {
+module.exports.updateUser = async (req, res, next) => {
   const user = await User.findById(req.user._id);
   let { username } = req.body.user;
   const existingUser = await User.findOne({

@@ -1,21 +1,27 @@
 const express = require("express");
 const router = express.Router();
-const wrapAsync = require("../utils/wrapAsync");
 
-const { isLoggedIn, isOwner, validateListing } = require("../middlewares");
-const listingController = require("../controllers/listings");
+const wrapAsync = require("../utils/wrapAsync");
 
 const multer = require("multer");
 const { storage } = require("../config/cloudConfig");
 const upload = multer({ storage });
+
+const listingController = require("../controllers/listings");
+
+const {
+  isLoggedIn,
+  isOwner,
+  validateListing,
+} = require("../middlewares/index");
 
 router
   .route("/")
   .get(wrapAsync(listingController.index))
   .post(
     isLoggedIn,
-    validateListing,
     upload.single("listing[image]"),
+    validateListing,
     wrapAsync(listingController.createListing),
   );
 
@@ -27,8 +33,8 @@ router
   .put(
     isLoggedIn,
     isOwner,
-    validateListing,
     upload.single("listing[image]"),
+    validateListing,
     wrapAsync(listingController.updateListing),
   )
   .delete(isLoggedIn, isOwner, wrapAsync(listingController.destroyListing));

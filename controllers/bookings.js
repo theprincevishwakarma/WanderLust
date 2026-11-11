@@ -14,7 +14,7 @@ module.exports.renderBookingPage = async (req, res) => {
 };
 
 module.exports.renderAllBookingStays = async (req, res) => {
-  const bookings = await Booking.find({ userId: req.user._id }).populate(
+  const bookings = await Booking.find({ guestId: req.user._id }).populate(
     "listingId",
   );
   if (bookings.length != 0) {

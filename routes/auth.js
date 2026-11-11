@@ -3,7 +3,12 @@ const router = express.Router();
 const wrapAasync = require("../utils/wrapAsync");
 const passport = require("passport");
 const controllers = require("../controllers/auth");
-const { isLoggedIn, saveRedirectUrl, validateUser } = require("../middlewares");
+
+const {
+  validateUser,
+  saveRedirectUrl,
+  isLoggedIn,
+} = require("../middlewares/index");
 
 router
   .route("/signup")
@@ -16,7 +21,7 @@ router
   .post(
     saveRedirectUrl,
     passport.authenticate("local", {
-      failureRedirect: "/login",
+      failureRedirect: "/auth/login",
       failureFlash: true,
     }),
     controllers.login,

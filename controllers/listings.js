@@ -43,7 +43,7 @@ module.exports.renderNewForm = (req, res) => {
   res.render("./listings/new", { showSearch: false });
 };
 
-module.exports.showListing = async (req, res) => {
+module.exports.showListing = async (req, res, next) => {
   let { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return next(
@@ -63,7 +63,7 @@ module.exports.showListing = async (req, res) => {
     ? Boolean(
         await Booking.exists({
           listingId: listing._id,
-          userId: req.user._id,
+          guestId: req.user._id,
         }),
       )
     : false;
@@ -86,12 +86,17 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res) => {
-  let response = await geocodingClient
-    .forwardGeocode({
-      query: req.body.listing.location,
-      limit: 1,
-    })
-    .send();
+  try {
+    let response = await geocodingClient
+      .forwardGeocode({
+        query: req.body.listing.location,
+        limit: 1,
+      })
+      .send();
+  } catch (e) {
+    if (req.file) await cloudinary.uploader.destroy(req.file.filename);
+    throw e;
+  }
 
   const newListing = new Listing(req.body.listing);
   let { url, filename } = req.file;

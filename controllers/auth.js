@@ -4,7 +4,7 @@ module.exports.renderSignupForm = (req, res) => {
   res.render("./auth/signup", { showSearch: false });
 };
 
-module.exports.signup = async (req, res) => {
+module.exports.signup = async (req, res, next) => {
   try {
     let { username, email, password, name, phoneNo, location } = req.body.user;
     const newUser = new User({ email, username, name, phoneNo, location });
@@ -18,7 +18,7 @@ module.exports.signup = async (req, res) => {
     });
   } catch (e) {
     req.flash("error", e.message);
-    res.redirect("/signup");
+    res.redirect("/auth/signup");
   }
 };
 

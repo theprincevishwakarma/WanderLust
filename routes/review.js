@@ -2,14 +2,14 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 const wrapAsync = require("../utils/wrapAsync");
 
+const reviewController = require("../controllers/reviews");
+
 const {
-  validateReview,
   isLoggedIn,
+  validateReview,
   isReviewAuthor,
   isListingOwner,
-} = require("../middlewares");
-
-const reviewController = require("../controllers/reviews");
+} = require("../middlewares/index");
 
 router.post(
   "/",

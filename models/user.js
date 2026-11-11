@@ -1,6 +1,8 @@
-const { required } = require("joi");
+const { cloudinary } = require("../config/cloudConfig");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Listing = require("./listing");
+const Review = require("./review");
 
 const passportLocalMongoose = require("passport-local-mongoose");
 
@@ -42,8 +44,19 @@ const userSchema = new Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
+});
+
+userSchema.post("findOneAndDelete", async (user) => {
+  if (!user) return;
+
+  const listings = await Listing.find({ owner: user._id });
+  for (const listing of listings) {
+    await Listing.findByIdAndDelete(listing._id);
+    await cloudinary.uploader.destroy(listing.image.filename);
+  }
+  await Review.deleteMany({ author: user._id });
 });
 
 userSchema.plugin(passportLocalMongoose.default);
