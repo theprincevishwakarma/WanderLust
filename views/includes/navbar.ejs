@@ -1,44 +1,36 @@
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top elevation-3">
   <div class="container-fluid">
-    <a class="navbar-brand navbar-logo" href="/listings"
-      ><img
-        src="https://res.cloudinary.com/frtasp0i/image/upload/v1789910962/StayNest-logo.svg"
-        alt="StayNest"
-        class="navbar-logo-img logo"
-    /></a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <a class="navbar-brand navbar-logo" href="/listings"><img
+        src="https://res.cloudinary.com/frtasp0i/image/upload/v1789910962/StayNest-logo.svg" alt="StayNest"
+        class="navbar-logo-img logo" /></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a class="nav-link title" href="/listings">Explore StayNest</a>
       </div>
-      <% if (typeof showSearch === "undefined" || showSearch) { %>
-      <form class="d-flex" role="search" action="/listings" method="get">
-        <input class="form-control me-2 search" name="search" type="search" placeholder="Your next destination..." aria-label="Search" value="<%= typeof search !== 'undefined' ? search: ''%>"/>
-        <button class="btn btn-outline-success btn-search search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-      </form>
-      <%}%>
-      <div class="navbar-nav">
-        <a class="nav-link title" href="/listings/new">Become a host</a>
-        <% if(!currUser) {%>
-        <a class="nav-link title" href="/signup"><b>Sign up</b></a>
-        <a class="nav-link login-btn elevation-1" href="/login"><b>Log in</b></a>
-        <% } %>
-        <% if(currUser) {%>
-          <form action="/<%= currUser.username %>" method="get">
-            <button class="user-profile-icon ms-3"><b><i class="fa-regular fa-circle-user"></i></b></button>
-          </form>
-        <% } %>
-      </div>
+      <% if (typeof showSearch==="undefined" || showSearch) { %>
+        <form class="d-flex" role="search" action="/listings" method="get">
+          <input class="form-control me-2 search" name="search" type="search" placeholder="Your next destination..."
+            aria-label="Search" value="<%= typeof search !== 'undefined' ? search: ''%>" />
+          <button class="btn btn-outline-success btn-search search-btn" type="submit"><i
+              class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+        <%}%>
+          <div class="navbar-nav">
+            <a class="nav-link title" href="/listings/new">Become a host</a>
+            <% if(!currUser) {%>
+              <a class="nav-link title" href="/auth/signup"><b>Sign up</b></a>
+              <a class="nav-link login-btn elevation-1" href="/auth/login"><b>Log in</b></a>
+              <% } %>
+                <% if(currUser) {%>
+                  <form action="/<%= currUser.username %>" method="get">
+                    <button class="user-profile-icon ms-3"><b><i class="fa-regular fa-circle-user"></i></b></button>
+                  </form>
+                  <% } %>
+          </div>
     </div>
   </div>
 </nav>

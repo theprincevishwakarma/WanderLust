@@ -1,256 +1,248 @@
 <% layout("/layouts/boilerplate") -%>
 
-<div class="profile-page title">
-  <!-- ================= PROFILE HEADER ================= -->
+  <div class="profile-page title">
+    <!-- ================= PROFILE HEADER ================= -->
 
-  <section class="profile-header">
-    <div class="profile-avatar">
-      <i class="fa-solid fa-user icon"></i>
-    </div>
+    <section class="profile-header">
+      <div class="profile-avatar">
+        <i class="fa-solid fa-user icon"></i>
+      </div>
 
-    <div class="profile-info title">
-      <h2 class="profile-name">
-        <%= [currUser.name.firstName,
-        currUser.name.lastName].filter(Boolean).join(" ") %>
+      <div class="profile-info title">
+        <h2 class="profile-name">
+          <%= [currUser.name.firstName, currUser.name.lastName].filter(Boolean).join(" ") %>
       </h2>
 
-      <p class="profile-username title">@<%= currUser.username %></p>
+      <p class=" profile-username title">@<%= currUser.username %>
+              </p>
 
-      <span class="profile-member title">
-        <i class="fa-regular fa-calendar icon"></i>
-        Member of StayNest
-      </span>
-    </div>
-
-    <a href="<%= currUser.username %>/edit" class="edit-profile-btn">
-      <i class="fa-regular fa-pen-to-square icon"></i>
-      <span>Edit Profile</span>
-    </a>
-  </section>
-
-  <!-- ================= PROFILE STATS ================= -->
-
-  <section class="profile-stats">
-    <!-- Bookings -->
-    <a href="/book/stays">
-      <div class="profile-stat">
-        <div class="stat-icon">
-          <i class="fa-solid fa-suitcase-rolling"></i>
-        </div>
-
-        <div class="stat-info">
-          <h3><%= currUser.bookings.toLocaleString("en-IN") %></h3>
-          <p>Bookings</p>
-        </div>
-        <div class="stat-arrow">
-          <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </div>
-      </div>
-    </a>
-
-    <!-- Listings -->
-    <a href="/<%=currUser.username%>/listings">
-      <div class="profile-stat">
-        <div class="stat-icon">
-          <i class="fa-solid fa-house"></i>
-        </div>
-
-        <div class="stat-info">
-          <h3><%= currUser.listings.toLocaleString("en-IN") %></h3>
-          <p>Listings</p>
-        </div>
-
-        <div class="stat-arrow">
-          <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </div>
-      </div>
-    </a>
-  </section>
-
-  <!-- ================= PERSONAL INFORMATION ================= -->
-
-  <section class="profile-section">
-    <div class="section-heading">
-      <h3>Personal Information</h3>
-      <p>Your account information</p>
-    </div>
-
-    <div class="profile-details">
-      <!-- Email -->
-
-      <div class="profile-detail">
-        <div class="detail-icon">
-          <i class="fa-regular fa-envelope icon"></i>
-        </div>
-
-        <div>
-          <span>Email</span>
-          <p><%= currUser.email %></p>
-        </div>
+              <span class="profile-member title">
+                <i class="fa-regular fa-calendar icon"></i>
+                Member of StayNest
+              </span>
       </div>
 
-      <!-- Phone -->
+      <a href="<%= currUser.username %>/edit" class="edit-profile-btn">
+        <i class="fa-regular fa-pen-to-square icon"></i>
+        <span>Edit Profile</span>
+      </a>
+    </section>
 
-      <div class="profile-detail">
-        <div class="detail-icon">
-          <i class="fa-solid fa-phone icon"></i>
-        </div>
+    <!-- ================= PROFILE STATS ================= -->
 
-        <div>
-          <span>Phone</span>
-          <p><%= currUser.phoneNo %></p>
-        </div>
-      </div>
-
-      <!-- Location -->
-
-      <div class="profile-detail">
-        <div class="detail-icon">
-          <i class="fa-solid fa-location-dot icon"></i>
-        </div>
-
-        <div>
-          <span>Location</span>
-          <p><%= currUser.location %></p>
-        </div>
-      </div>
-
-      <!-- Account -->
-
-      <div class="profile-detail">
-        <div class="detail-icon">
-          <i class="fa-solid fa-shield-halved icon"></i>
-        </div>
-
-        <div>
-          <span>Account</span>
-          <p>Verified StayNest account</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= ACCOUNT ================= -->
-
-  <section class="profile-section account-section title">
-    <div class="section-heading">
-      <h3>Account</h3>
-      <p>Manage your StayNest account</p>
-    </div>
-
-    <div class="account-actions">
-      <!-- LOGOUT -->
-
-      <form action="/logout" method="POST">
-        <button type="submit" class="account-action logout-action">
-          <div class="account-action-left">
-            <div class="account-icon logout-icon">
-              <i class="fa-solid fa-right-from-bracket icon"></i>
-            </div>
-
-            <div class="title">
-              <b>Log out</b>
-              <span>Sign out of your StayNest account</span>
-            </div>
+    <section class="profile-stats">
+      <!-- Bookings -->
+      <a href="/book/stays">
+        <div class="profile-stat">
+          <div class="stat-icon">
+            <i class="fa-solid fa-suitcase-rolling"></i>
           </div>
 
-          <i class="fa-solid fa-chevron-right icon"></i>
-        </button>
-      </form>
+          <div class="stat-info">
+            <h3>
+              <%= currUser.bookings.toLocaleString("en-IN") %>
+            </h3>
+            <p>Bookings</p>
+          </div>
+          <div class="stat-arrow">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </div>
+        </div>
+      </a>
 
-      <!-- change password -->
-      <a
-        href="<%= currUser.username %>/newpassword"
-        class="account-action logout-action"
-      >
-        <div class="account-action-left">
-          <div class="account-icon logout-icon">
-            <i class="fa-solid fa-key icon"></i>
+      <!-- Listings -->
+      <a href="/<%=currUser.username%>/listings">
+        <div class="profile-stat">
+          <div class="stat-icon">
+            <i class="fa-solid fa-house"></i>
+          </div>
+
+          <div class="stat-info">
+            <h3>
+              <%= currUser.listings.toLocaleString("en-IN") %>
+            </h3>
+            <p>Listings</p>
+          </div>
+
+          <div class="stat-arrow">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <!-- ================= PERSONAL INFORMATION ================= -->
+
+    <section class="profile-section">
+      <div class="section-heading">
+        <h3>Personal Information</h3>
+        <p>Your account information</p>
+      </div>
+
+      <div class="profile-details">
+        <!-- Email -->
+
+        <div class="profile-detail">
+          <div class="detail-icon">
+            <i class="fa-regular fa-envelope icon"></i>
           </div>
 
           <div>
-            <b>Change Password</b>
-            <span>Update your password to keep your account secure</span>
+            <span>Email</span>
+            <p>
+              <%= currUser.email %>
+            </p>
           </div>
         </div>
 
-        <i class="fa-solid fa-chevron-right icon"></i>
-      </a>
+        <!-- Phone -->
 
-      <!-- DELETE ACCOUNT -->
-      <form action="/<%= currUser.username %>?_method=DELETE" method="post">
-        <button
-          type="button"
-          class="account-action delete-action"
-          data-bs-toggle="modal"
-          data-bs-target="#deleteAccountModal"
-        >
+        <div class="profile-detail">
+          <div class="detail-icon">
+            <i class="fa-solid fa-phone icon"></i>
+          </div>
+
+          <div>
+            <span>Phone</span>
+            <p>
+              <%= currUser.phoneNo %>
+            </p>
+          </div>
+        </div>
+
+        <!-- Location -->
+
+        <div class="profile-detail">
+          <div class="detail-icon">
+            <i class="fa-solid fa-location-dot icon"></i>
+          </div>
+
+          <div>
+            <span>Location</span>
+            <p>
+              <%= currUser.location %>
+            </p>
+          </div>
+        </div>
+
+        <!-- Account -->
+
+        <div class="profile-detail">
+          <div class="detail-icon">
+            <i class="fa-solid fa-shield-halved icon"></i>
+          </div>
+
+          <div>
+            <span>Account</span>
+            <p>Verified StayNest account</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ACCOUNT ================= -->
+
+    <section class="profile-section account-section title">
+      <div class="section-heading">
+        <h3>Account</h3>
+        <p>Manage your StayNest account</p>
+      </div>
+
+      <div class="account-actions">
+        <!-- LOGOUT -->
+
+        <form action="/auth/logout" method="POST">
+          <button type="submit" class="account-action logout-action">
+            <div class="account-action-left">
+              <div class="account-icon logout-icon">
+                <i class="fa-solid fa-right-from-bracket icon"></i>
+              </div>
+
+              <div class="title">
+                <b>Log out</b>
+                <span>Sign out of your StayNest account</span>
+              </div>
+            </div>
+
+            <i class="fa-solid fa-chevron-right icon"></i>
+          </button>
+        </form>
+
+        <!-- change password -->
+        <a href="<%= currUser.username %>/newpassword" class="account-action logout-action">
           <div class="account-action-left">
-            <div class="account-icon delete-icon">
-              <i class="fa-regular fa-trash-can icon"></i>
+            <div class="account-icon logout-icon">
+              <i class="fa-solid fa-key icon"></i>
             </div>
 
             <div>
-              <b class="icon">Delete account</b>
-              <span class="title"
-                >Permanently delete your StayNest account</span
-              >
+              <b>Change Password</b>
+              <span>Update your password to keep your account secure</span>
             </div>
           </div>
 
           <i class="fa-solid fa-chevron-right icon"></i>
-        </button>
-      </form>
-    </div>
-  </section>
-</div>
+        </a>
 
-<!-- ================================================= -->
-<!-- DELETE ACCOUNT MODAL -->
-<!-- ================================================= -->
+        <!-- DELETE ACCOUNT -->
+        <form action="/<%= currUser.username %>?_method=DELETE" method="post">
+          <button type="button" class="account-action delete-action" data-bs-toggle="modal"
+            data-bs-target="#deleteAccountModal">
+            <div class="account-action-left">
+              <div class="account-icon delete-icon">
+                <i class="fa-regular fa-trash-can icon"></i>
+              </div>
 
-<div
-  class="modal fade title"
-  id="deleteAccountModal"
-  tabindex="-1"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content delete-modal">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete your account?</h5>
+              <div>
+                <b class="icon">Delete account</b>
+                <span class="title">Permanently delete your StayNest account</span>
+              </div>
+            </div>
 
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-
-      <div class="modal-body">
-        <div class="delete-warning-icon">
-          <i class="fa-solid fa-triangle-exclamation icon"></i>
-        </div>
-
-        <p>Are you sure you want to delete your StayNest account?</p>
-
-        <small>
-          This action cannot be undone. Your account and associated data may be
-          permanently deleted.
-        </small>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="cancel-btn" data-bs-dismiss="modal">
-          Cancel
-        </button>
-
-        <form action="/account?_method=DELETE" method="POST">
-          <button type="submit" class="delete-confirm-btn">
-            Delete Account
+            <i class="fa-solid fa-chevron-right icon"></i>
           </button>
         </form>
       </div>
+    </section>
+  </div>
+
+  <!-- ================================================= -->
+  <!-- DELETE ACCOUNT MODAL -->
+  <!-- ================================================= -->
+
+  <div class="modal fade title" id="deleteAccountModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content delete-modal">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete your account?</h5>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="delete-warning-icon">
+            <i class="fa-solid fa-triangle-exclamation icon"></i>
+          </div>
+
+          <p>Are you sure you want to delete your StayNest account?</p>
+
+          <small>
+            This action cannot be undone. Your account and associated data may be
+            permanently deleted.
+          </small>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="cancel-btn" data-bs-dismiss="modal">
+            Cancel
+          </button>
+
+          <form action="/account?_method=DELETE" method="POST">
+            <button type="submit" class="delete-confirm-btn">
+              Delete Account
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-</div>
